@@ -5,21 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-<<<<<<< HEAD
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-=======
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Scene_Main_Menu_01.unity
     guid: 138f1f0830c0c144abfee1ac76f805ea
   - enabled: 1
     path: Assets/Scenes/Scene_World_01.unity
     guid: 91a1abf8ac8280b47996cefbdcaa2bd1
->>>>>>> 7862e569 (basic prototyping, unity netcode not fully functional)
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 019aa5bee475872419426b86bffb1317, type: 3}
   m_UseUCBPForAssetBundles: 0

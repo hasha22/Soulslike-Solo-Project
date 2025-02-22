@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5384106839905447974}
   - component: {fileID: 4651341566522132484}
-  - component: {fileID: 4808072574726897017}
+  - component: {fileID: -7962542099743493696}
   m_Layer: 0
   m_Name: World Network Manager
   m_TagString: Untagged
@@ -48,7 +48,7 @@ MonoBehaviour:
   NetworkManagerExpanded: 0
   NetworkConfig:
     ProtocolVersion: 0
-    NetworkTransport: {fileID: 4808072574726897017}
+    NetworkTransport: {fileID: -7962542099743493696}
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
@@ -75,7 +75,7 @@ MonoBehaviour:
     OldPrefabList: []
   RunInBackground: 1
   LogLevel: 1
---- !u!114 &4808072574726897017
+--- !u!114 &-7962542099743493696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

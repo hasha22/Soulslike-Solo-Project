@@ -14,6 +14,7 @@ namespace SaveGameManager
             if (instance == null)
             {
                 instance = this;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -29,6 +30,11 @@ namespace SaveGameManager
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
             yield return null;
+        }
+
+        public int GetWorldSceneIndex()
+        {
+            return worldSceneIndex;
         }
     }
 }
