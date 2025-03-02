@@ -14,6 +14,10 @@ namespace StartGame
         {
             StartCoroutine(WorldSaveGameManager.instance.LoadNewGame());
         }
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }
 

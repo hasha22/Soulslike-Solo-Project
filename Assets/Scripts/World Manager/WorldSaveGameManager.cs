@@ -25,6 +25,7 @@ namespace SaveGameManager
         {
             DontDestroyOnLoad(gameObject);
         }
+
         public IEnumerator LoadNewGame()
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);

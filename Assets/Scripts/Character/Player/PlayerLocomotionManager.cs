@@ -7,8 +7,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public float horizontalMovement;
     public float moveAmount;
 
-
-
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
     [SerializeField] float walkingSpeed = 2;
@@ -39,6 +37,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
+        //Determines Running vs Walking
         if (PlayerInputManager.instance.moveAmount > 0.5f)
         {
             player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);

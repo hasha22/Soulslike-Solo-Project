@@ -5,16 +5,22 @@ using UnityEngine.SceneManagement;
 public class PlayerInputManager : MonoBehaviour
 {
     InputControls inputControls;
-    [SerializeField] Vector2 movement;
+
+    [Header("Player Movement")]
+    [SerializeField] Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
     public float moveAmount;
+
+    [Header("Player Camera")]
+    [SerializeField] Vector2 cameraInput;
+    public float verticalCameraInput;
+    public float horizontalCameraInput;
 
     public static PlayerInputManager instance;
 
     private void Awake()
     {
-        Debug.Log("PlayerInputManager instance assigned: " + (instance != null));
         if (instance == null)
         {
             instance = this;
@@ -29,8 +35,6 @@ public class PlayerInputManager : MonoBehaviour
     private void Start()
     {
         SceneManager.activeSceneChanged += OnSceneChange;
-
-        instance.enabled = false;
     }
     private void OnSceneChange(Scene oldScene, Scene newScene)
     {
@@ -51,7 +55,8 @@ public class PlayerInputManager : MonoBehaviour
         {
             inputControls = new InputControls();
 
-            inputControls.PlayerControls.Movement.performed += i => movement = i.ReadValue<Vector2>();
+            inputControls.PlayerControls.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+            inputControls.PlayerCamera.CameraControls.performed += i => cameraInput = i.ReadValue<Vector2>();
 
             inputControls.Enable();
         }
@@ -74,16 +79,17 @@ public class PlayerInputManager : MonoBehaviour
     private void Update()
     {
         HandleMovementInput();
+        HandleCameraInput();
     }
     private void HandleMovementInput()
     {
-        verticalInput = movement.y;
-        horizontalInput = movement.x;
+        verticalInput = movementInput.y;
+        horizontalInput = movementInput.x;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
         //Clamping values 
-        if (moveAmount <= 0.5 && moveAmount > 0)
+        if (moveAmount > 0 && moveAmount <= 0.5)
         {
             moveAmount = 0.5f;
         }
@@ -91,5 +97,10 @@ public class PlayerInputManager : MonoBehaviour
         {
             moveAmount = 1;
         }
+    }
+    private void HandleCameraInput()
+    {
+        verticalCameraInput = cameraInput.y;
+        horizontalCameraInput = cameraInput.x;
     }
 }
