@@ -10,7 +10,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
-    public float moveAmount;
+    public float moveAmount = 0;
 
     [Header("Player Camera")]
     [SerializeField] Vector2 cameraInput;
@@ -18,6 +18,7 @@ public class PlayerInputManager : MonoBehaviour
     public float horizontalCameraInput;
 
     public static PlayerInputManager instance;
+    public PlayerManager player;
 
     private void Awake()
     {
@@ -97,6 +98,12 @@ public class PlayerInputManager : MonoBehaviour
         {
             moveAmount = 1;
         }
+        if (player == null)
+        {
+            return;
+        }
+        //not locked on, therefore no strafing 
+        player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount);
     }
     private void HandleCameraInput()
     {

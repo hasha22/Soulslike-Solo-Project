@@ -2,13 +2,15 @@ using Unity.Netcode;
 using UnityEngine;
 public class CharacterManager : NetworkBehaviour
 {
-    public CharacterController characterController { get; private set; }
-    CharacterNetworkManager characterNetworkManager;
+    [HideInInspector] public CharacterController characterController { get; private set; }
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
 
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
     }
     protected virtual void Update()
