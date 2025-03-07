@@ -5,20 +5,24 @@ using UnityEngine.SceneManagement;
 public class PlayerInputManager : MonoBehaviour
 {
     InputControls inputControls;
+    public static PlayerInputManager instance;
+    public PlayerManager player;
 
     [Header("Player Movement")]
     [SerializeField] Vector2 movementInput;
     public float verticalInput;
     public float horizontalInput;
     public float moveAmount = 0;
+    public bool isWalking = false;
 
     [Header("Player Camera")]
     [SerializeField] Vector2 cameraInput;
     public float verticalCameraInput;
     public float horizontalCameraInput;
 
-    public static PlayerInputManager instance;
-    public PlayerManager player;
+    [Header("Player Actions")]
+    [SerializeField] bool isDodging = false;
+
 
     private void Awake()
     {
@@ -58,6 +62,8 @@ public class PlayerInputManager : MonoBehaviour
 
             inputControls.PlayerControls.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             inputControls.PlayerCamera.CameraControls.performed += i => cameraInput = i.ReadValue<Vector2>();
+            inputControls.PlayerActions.Dodge.performed += i => isDodging = !isDodging;
+            inputControls.PlayerActions.Walk.performed += i => isWalking = !isWalking;
 
             inputControls.Enable();
         }
@@ -79,8 +85,13 @@ public class PlayerInputManager : MonoBehaviour
     }
     private void Update()
     {
+        HandleAllInputs();
+    }
+    private void HandleAllInputs()
+    {
         HandleMovementInput();
         HandleCameraInput();
+        HandleDodgeInput();
     }
     private void HandleMovementInput()
     {
@@ -89,14 +100,17 @@ public class PlayerInputManager : MonoBehaviour
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
-        //Clamping values 
-        if (moveAmount > 0 && moveAmount <= 0.5)
+        //Clamping values
+        if (moveAmount != 0)
         {
-            moveAmount = 0.5f;
-        }
-        else if (moveAmount > 0.5 && moveAmount <= 1)
-        {
-            moveAmount = 1;
+            if (isWalking)
+            {
+                moveAmount = 0.5f;
+            }
+            else if (moveAmount > 0.5 && moveAmount <= 1)
+            {
+                moveAmount = 1;
+            }
         }
         if (player == null)
         {
@@ -109,5 +123,15 @@ public class PlayerInputManager : MonoBehaviour
     {
         verticalCameraInput = cameraInput.y;
         horizontalCameraInput = cameraInput.x;
+    }
+    private void HandleDodgeInput()
+    {
+        if (isDodging)
+        {
+            isDodging = false;
+
+            player.playerLocomotionManager.AttemptToPerformDodge();
+
+        }
     }
 }
