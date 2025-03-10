@@ -5,6 +5,7 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public CharacterController characterController { get; private set; }
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
+    [HideInInspector] public PlayerManager player;
 
     [Header("Flags")]
     public bool isPerformingAction = false;

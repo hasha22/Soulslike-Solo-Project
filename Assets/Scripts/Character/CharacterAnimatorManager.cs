@@ -5,17 +5,26 @@ public class CharacterAnimatorManager : MonoBehaviour
 {
     CharacterManager character;
 
-    float vertical;
-    float horizontal;
+    int vertical;
+    int horizontal;
 
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
+        vertical = Animator.StringToHash("Vertical");
+        horizontal = Animator.StringToHash("Horizontal");
     }
     public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
     {
-        character.animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-        character.animator.SetFloat("Vertical", verticalValue, 0.1f, Time.deltaTime);
+        float horizontalMovement = horizontalValue;
+        float verticalMovement = verticalValue;
+        if (character.characterNetworkManager.isSprinting.Value)
+        {
+            verticalMovement = 2;
+        }
+        character.animator.SetFloat(horizontal, horizontalMovement, 0.1f, Time.deltaTime);
+        character.animator.SetFloat(vertical, verticalMovement, 0.1f, Time.deltaTime);
+
     }
 
     public virtual void PlayActionAnimation(string targetAnimation, bool isPerformingAction)

@@ -10,8 +10,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
+
     [SerializeField] float walkingSpeed = 1.2f;
     [SerializeField] float runningSpeed = 2.5f;
+    [SerializeField] float sprintingSpeed = 4f;
     [SerializeField] float rotationSpeed = 15;
 
     [Header("Dodge")]
@@ -56,15 +58,23 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         GetMovement();
         if (!player.canMove)
             return;
+
         //Movement based on camera perspective and inputs
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
         moveDirection += PlayerCamera.instance.transform.right * horizontalMovement;
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        //Determines Running vs Walking
-        float speed = PlayerInputManager.instance.isWalking ? walkingSpeed : runningSpeed;
-        player.characterController.Move(moveDirection * speed * Time.deltaTime);
+        if (player.playerNetworkManager.isSprinting.Value)
+        {
+            player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
+        }
+        else
+        {
+            float speed = PlayerInputManager.instance.isWalking ? walkingSpeed : runningSpeed;
+            player.characterController.Move(moveDirection * speed * Time.deltaTime);
+        }
+
     }
     private void HandleRotation()
     {
@@ -108,5 +118,24 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             player.playerAnimationManager.PlayActionAnimation("Backstep_01", true);
         }
     }
+
+    public void HandleSprinting()
+    {
+        if (player.isPerformingAction)
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+        }
+
+
+        if (moveAmount >= 0.5)
+        {
+            player.playerNetworkManager.isSprinting.Value = true;
+        }
+        else
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+        }
+    }
+
 
 }
