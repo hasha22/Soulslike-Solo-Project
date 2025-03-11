@@ -6,6 +6,9 @@ public class WorldSoundFXManager : MonoBehaviour
 
     [Header("Action Sounds")]
     [SerializeField] public AudioClip rollingSFX;
+    [SerializeField] public AudioClip[] footstepClips;
+    [SerializeField] public AudioClip[] walkingClips;
+    [SerializeField] public AudioClip[] backstepClips;
 
     private void Awake()
     {

@@ -27,37 +27,28 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     [Header("Flags")]
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [Header("Stats")]
+    public NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<float> currentStamina = new NetworkVariable<float>(0f, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> endurance = new NetworkVariable<int>(12, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     protected virtual void Awake()
     {
         networkTransform = GetComponent<NetworkTransform>();
         character = GetComponent<CharacterManager>();
     }
-    [Rpc(SendTo.Server)]
-    public void NotifyServerOfActionAnimationRpc(ulong clientID, string animationID)
+    [Rpc(SendTo.Everyone)]
+    public void BroadcastActionAnimationRpc(ulong clientID, string animationID)
     {
-        //if is host
-        if (IsServer)
-        {
-            PlayActionAnimationForAllClientsRpc(clientID, animationID);
-        }
-    }
-
-    [Rpc(SendTo.NotServer)]
-    public void PlayActionAnimationForAllClientsRpc(ulong clientID, string animationID)
-    {
-        PerformActionAnimationFromServer(animationID);
-        //doesn't run the animation on the client that sent it
-        /*
         if (clientID != NetworkManager.Singleton.LocalClientId)
         {
             PerformActionAnimationFromServer(animationID);
         }
-        */
     }
 
     private void PerformActionAnimationFromServer(string animationID)
     {
-
         character.animator.CrossFade(animationID, 0.2f);
     }
 }

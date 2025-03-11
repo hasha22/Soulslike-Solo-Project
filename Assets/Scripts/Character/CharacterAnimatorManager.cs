@@ -35,6 +35,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.canRotate = false;
         character.canMove = false;
 
-        character.characterNetworkManager.NotifyServerOfActionAnimationRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
+
+        character.characterNetworkManager.BroadcastActionAnimationRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
     }
 }

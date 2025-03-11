@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
+    PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public float verticalMovement;
     [HideInInspector] public float horizontalMovement;
     [HideInInspector] public float moveAmount;
@@ -15,14 +16,17 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float runningSpeed = 2.5f;
     [SerializeField] float sprintingSpeed = 4f;
     [SerializeField] float rotationSpeed = 15;
+    [SerializeField] int sprintingStaminaCost = 5;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    [SerializeField] float dodgeStaminaCost = 25;
     protected override void Awake()
     {
         base.Awake();
 
         player = GetComponent<PlayerManager>();
+        playerNetworkManager = GetComponent<PlayerNetworkManager>();
     }
     protected override void Update()
     {
@@ -100,6 +104,12 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (player.isPerformingAction)
             return;
+
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+        {
+            return;
+        }
+
         if (moveAmount > 0)
         {
             //Moving roll
@@ -117,6 +127,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             player.playerAnimationManager.PlayActionAnimation("Backstep_01", true);
         }
+        player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
     }
 
     public void HandleSprinting()
@@ -126,6 +137,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             player.playerNetworkManager.isSprinting.Value = false;
         }
 
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+        {
+            player.playerNetworkManager.isSprinting.Value = false;
+            return;
+        }
 
         if (moveAmount >= 0.5)
         {
@@ -134,6 +150,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         else
         {
             player.playerNetworkManager.isSprinting.Value = false;
+        }
+
+        if (player.playerNetworkManager.isSprinting.Value)
+        {
+            player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
         }
     }
 

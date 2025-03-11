@@ -13,6 +13,8 @@ public class CharacterManager : NetworkBehaviour
     public bool canRotate = true;
     public bool canMove = true;
 
+
+
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
@@ -46,4 +48,6 @@ public class CharacterManager : NetworkBehaviour
     {
 
     }
+
+
 }
