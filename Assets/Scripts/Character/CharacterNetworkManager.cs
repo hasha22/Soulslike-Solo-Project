@@ -7,6 +7,7 @@ public class CharacterNetworkManager : NetworkBehaviour
 {
     CharacterManager character;
     private NetworkTransform networkTransform;
+
     [Header("Position")]
     public NetworkVariable<Vector3> networkPosition = new NetworkVariable<Vector3>
         (Vector3.zero,
@@ -38,7 +39,7 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     [Header("Stats")]
     public NetworkVariable<int> endurance = new NetworkVariable<int>(12, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-    public NetworkVariable<int> vigor = new NetworkVariable<int>(14, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> vigor = new NetworkVariable<int>(50, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> mind = new NetworkVariable<int>(8, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     protected virtual void Awake()

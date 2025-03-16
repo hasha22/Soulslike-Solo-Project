@@ -6,7 +6,7 @@ namespace SaveGameManager
 {
     public class WorldSaveGameManager : MonoBehaviour
     {
-        public static WorldSaveGameManager instance { get; private set; }
+        public static WorldSaveGameManager instance;
 
         [SerializeField] PlayerManager player;
         [Header("SAVE/LOAD")]

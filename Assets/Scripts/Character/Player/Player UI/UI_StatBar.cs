@@ -14,6 +14,13 @@ public class UI_StatBar : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         rectTransform = GetComponent<RectTransform>();
+
+        if (scaleBarLengthWithStats)
+        {
+            rectTransform.pivot = new Vector2(0, 0.5f);
+            rectTransform.anchorMin = new Vector2(0, 0.5f);
+            rectTransform.anchorMax = new Vector2(0, 0.5f);
+        }
     }
     public virtual void SetStat(int newValue)
     {
