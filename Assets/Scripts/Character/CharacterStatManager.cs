@@ -13,13 +13,29 @@ public class CharacterStatManager : MonoBehaviour
     {
         character = GetComponent<CharacterManager>();
     }
+
+    protected virtual void Start()
+    {
+
+    }
+
+    public int CalculateHealthBasedOnVigorLevel(int vigor)
+    {
+        float health = 0;
+        health = vigor * 12;
+        return Mathf.RoundToInt(health);
+    }
     public int CalculateStaminaBasedOnEnduranceLevel(int endurance)
     {
         float stamina = 0;
-
         stamina = endurance * 10;
-
         return Mathf.RoundToInt(stamina);
+    }
+    public int CalculateFocusPointsBasedOnMindLevel(int mind)
+    {
+        float focusPoints = 0;
+        focusPoints = mind * 8;
+        return Mathf.RoundToInt(focusPoints);
     }
     public virtual void RegenerateStamina()
     {

@@ -12,7 +12,8 @@ namespace StartGame
         }
         public void StartNewGame()
         {
-            StartCoroutine(WorldSaveGameManager.instance.LoadNewGame());
+            WorldSaveGameManager.instance.NewGame();
+            StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
         }
         public void QuitGame()
         {
