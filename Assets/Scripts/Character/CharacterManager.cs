@@ -2,18 +2,15 @@ using Unity.Netcode;
 using UnityEngine;
 public class CharacterManager : NetworkBehaviour
 {
-    [HideInInspector] public CharacterController characterController { get; private set; }
+    [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public PlayerManager player;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
-    public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
-
-
 
     protected virtual void Awake()
     {
@@ -43,7 +40,6 @@ public class CharacterManager : NetworkBehaviour
                 characterNetworkManager.networkRotationSmoothTime);
         }
     }
-
     protected virtual void LateUpdate()
     {
 

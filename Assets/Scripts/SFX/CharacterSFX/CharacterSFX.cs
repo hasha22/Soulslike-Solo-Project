@@ -1,9 +1,8 @@
 using UnityEngine;
 
-public class CharacterSoundEffectManager : MonoBehaviour
+public class CharacterSFX : MonoBehaviour
 {
     private AudioSource audioSource;
-
     protected virtual void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -11,15 +10,14 @@ public class CharacterSoundEffectManager : MonoBehaviour
 
     public void PlayRollSoundFX()
     {
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.rollingSFX);
+        audioSource.PlayOneShot(WorldSFXManager.instance.rollingSFX);
     }
     public void PlayFootstepSFX()
     {
-        int index = Random.Range(0, WorldSoundFXManager.instance.footstepClips.Length);
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.footstepClips[index]);
+        int index = Random.Range(0, WorldSFXManager.instance.footstepClips.Length);
+        audioSource.PlayOneShot(WorldSFXManager.instance.footstepClips[index]);
     }
 
-    // PlayWalkSFX and PlayBackstepSFX currently not working as intended
     public void PlayWalkSFX()
     {
         //int index = Random.Range(0, WorldSoundFXManager.instance.walkingClips.Length);
@@ -29,5 +27,4 @@ public class CharacterSoundEffectManager : MonoBehaviour
     {
 
     }
-
 }

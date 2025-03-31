@@ -10,7 +10,7 @@ public class PlayerCamera : MonoBehaviour
 
     //camera performance
     [Header("Camera Settings")]
-    [SerializeField] float cameraSmoothSpeed = 1; //the greater the number, the longer it takes for the camera to reach its position during movement\
+    [SerializeField] float cameraSmoothSpeed = 1; //the greater the number, the longer it takes for the camera to reach its position during movement
     [SerializeField] float leftAndRightRotationSpeed = 30;
     [SerializeField] float upAndDownRotationSpeed = 30;
     [SerializeField] float minimumPivot = -30; //lowest point to look down

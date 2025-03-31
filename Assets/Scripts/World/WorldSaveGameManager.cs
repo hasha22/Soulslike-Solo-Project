@@ -26,6 +26,15 @@ namespace SaveGameManager
 
         [Header("Character Slots")]
         public CharacterSaveData characterSlot01;
+        public CharacterSaveData characterSlot02;
+        public CharacterSaveData characterSlot03;
+        public CharacterSaveData characterSlot04;
+        public CharacterSaveData characterSlot05;
+        public CharacterSaveData characterSlot06;
+        public CharacterSaveData characterSlot07;
+        public CharacterSaveData characterSlot08;
+        public CharacterSaveData characterSlot09;
+        public CharacterSaveData characterSlot10;
         private void Awake()
         {
             if (instance == null)
@@ -56,10 +65,11 @@ namespace SaveGameManager
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
+            LoadAllCharacterProfiles();
         }
-        private void DecideCharacterFileName()
+        public string DecideCharacterFileName(CharacterSlots characterSlot)
         {
-            switch (currentCharacterSlot)
+            switch (characterSlot)
             {
                 case CharacterSlots.CharacterSlot_01:
                     saveFileName = "CharacterSlot_01";
@@ -92,19 +102,18 @@ namespace SaveGameManager
                     saveFileName = "CharacterSlot_10";
                     break;
             }
+            return saveFileName;
         }
 
         public void NewGame()
         {
-            DecideCharacterFileName();
-
+            saveFileName = DecideCharacterFileName(currentCharacterSlot);
             currentCharacterData = new CharacterSaveData();
         }
 
         public void LoadGame()
         {
-            DecideCharacterFileName();
-
+            saveFileName = DecideCharacterFileName(currentCharacterSlot);
             saveFileDataWriter = new SaveFileDataWriter();
             //works on multiple machine types
             saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
@@ -116,7 +125,7 @@ namespace SaveGameManager
 
         public void SaveGame()
         {
-            DecideCharacterFileName();
+            saveFileName = DecideCharacterFileName(currentCharacterSlot);
 
             saveFileDataWriter = new SaveFileDataWriter();
             saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
@@ -125,6 +134,31 @@ namespace SaveGameManager
             player.SavePlayerData(ref currentCharacterData);
 
             saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
+        }
+
+        private void LoadAllCharacterProfiles()
+        {
+            saveFileDataWriter = new SaveFileDataWriter();
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_01);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_02);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_04);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_05);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_06);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_07);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_08);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_09);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_10);
+            characterSlot01 = saveFileDataWriter.LoadSaveFile();
         }
         public IEnumerator LoadWorldScene()
         {

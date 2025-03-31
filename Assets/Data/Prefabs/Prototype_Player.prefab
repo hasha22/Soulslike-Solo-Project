@@ -1909,14 +1909,14 @@ GameObject:
   - component: {fileID: -6967595218578694781}
   - component: {fileID: 1858977474774539385}
   - component: {fileID: 5068403513811317674}
-  - component: {fileID: 3983081510090203692}
   - component: {fileID: 3011204550580616316}
+  - component: {fileID: 811469416767110587}
   - component: {fileID: 578986219959200346}
   - component: {fileID: 3897625176042786316}
   - component: {fileID: -8399081052969007176}
   m_Layer: 0
   m_Name: Prototype_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2008,7 +2008,7 @@ MonoBehaviour:
   vigor:
     m_InternalValue: 15
   mind:
-    m_InternalValue: 35
+    m_InternalValue: 8
   characterName:
     m_InternalValue:
       utf8LengthInBytes: 9
@@ -2127,11 +2127,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  characterController: {fileID: 0}
   animator: {fileID: 0}
   characterNetworkManager: {fileID: 0}
   player: {fileID: 0}
   isPerformingAction: 0
-  applyRootMotion: 0
   canRotate: 1
   canMove: 1
   playerAnimationManager: {fileID: 0}
@@ -2171,18 +2171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed22f3b1c074184f90ef7841972eaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3983081510090203692
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8834627601471729450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1d372fce41e6d840a6118012e43ad18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3011204550580616316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2197,6 +2185,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaRegenerationDelay: 2
   staminaRegenerationAmount: 1
+--- !u!114 &811469416767110587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8834627601471729450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7516bdb1190cf934286878985efa66cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &578986219959200346
 Animator:
   serializedVersion: 7

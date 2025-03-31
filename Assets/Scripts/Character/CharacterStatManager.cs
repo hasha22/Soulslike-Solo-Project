@@ -147,7 +147,6 @@ public class CharacterStatManager : MonoBehaviour
 
     public virtual void ResetStaminaRegenTimer(float previousStaminaAmount, float currentStaminaAmount)
     {
-        //Regenerates stamina only after performing an action that consumes stamina
         if (currentStaminaAmount < previousStaminaAmount)
         {
             staminaRegenerationTimer = 0;

@@ -20,8 +20,8 @@ public class PlayerInputManager : MonoBehaviour
     public float horizontalCameraInput;
 
     [Header("Player Actions")]
-    [SerializeField] bool isDodging = false;
-    [SerializeField] bool isSprinting = false;
+    public bool isDodging = false;
+    public bool isSprinting = false;
     public bool isWalking = false;
 
     private void Awake()
@@ -132,9 +132,7 @@ public class PlayerInputManager : MonoBehaviour
         if (isDodging)
         {
             isDodging = false;
-
             player.playerLocomotionManager.AttemptToPerformDodge();
-
         }
     }
 

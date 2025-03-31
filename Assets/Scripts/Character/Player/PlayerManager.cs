@@ -25,11 +25,9 @@ public class PlayerManager : CharacterManager
             return;
         }
         playerLocomotionManager.HandleAllMovement();
-
         playerStatManager.RegenerateStamina();
 
     }
-
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -50,8 +48,7 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
         playerNetworkManager.currentFocusPoints.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
 
-        // temp testing, this will be moved to LoadPlayerData()
-
+        // following will be moved to LoadPlayerData() in the future
         int maxStamina, maxHealth, maxFocusPoints;
         // stamina
         maxStamina = playerStatManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
@@ -71,9 +68,21 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentFocusPoints.Value = maxFocusPoints;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxFPValue(playerNetworkManager.maxFocusPoints.Value);
 
-
     }
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
 
+        //unsubscribing from the events
+        playerNetworkManager.vigor.OnValueChanged -= playerNetworkManager.SetNewVigorValue;
+        playerNetworkManager.endurance.OnValueChanged -= playerNetworkManager.SetNewEnduranceValue;
+        playerNetworkManager.mind.OnValueChanged -= playerNetworkManager.SetNewMindValue;
+
+        playerNetworkManager.currentStamina.OnValueChanged -= PlayerUIManager.instance.playerUIHUDManager.SetNewStaminaValue;
+        playerNetworkManager.currentStamina.OnValueChanged -= playerStatManager.ResetStaminaRegenTimer;
+        playerNetworkManager.currentHealth.OnValueChanged -= PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
+        playerNetworkManager.currentFocusPoints.OnValueChanged -= PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
+    }
     protected override void LateUpdate()
     {
         if (!IsOwner)
@@ -85,6 +94,10 @@ public class PlayerManager : CharacterManager
 
     public void SavePlayerData(ref CharacterSaveData currentCharacterData)
     {
+        if (playerNetworkManager == null)
+        {
+            playerNetworkManager = GetComponent<PlayerNetworkManager>();
+        }
         currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
         currentCharacterData.xPosition = transform.position.x;
         currentCharacterData.yPosition = transform.position.y;
@@ -97,6 +110,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.vigor = playerNetworkManager.vigor.Value;
         currentCharacterData.endurance = playerNetworkManager.endurance.Value;
         currentCharacterData.mind = playerNetworkManager.mind.Value;
+
+        Debug.Log("it saved");
     }
     public void LoadPlayerData(ref CharacterSaveData currentCharacterData)
     {
@@ -107,27 +122,5 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.vigor.Value = currentCharacterData.vigor;
         playerNetworkManager.endurance.Value = currentCharacterData.endurance;
         playerNetworkManager.mind.Value = currentCharacterData.mind;
-
-        /*
-        int maxStamina, maxHealth, maxFocusPoints;
-
-        // stamina
-        maxStamina = playerStatManager.CalculateStaminaBasedOnEnduranceLevel(currentCharacterData.endurance);
-        playerNetworkManager.maxStamina.Value = maxStamina;
-        playerNetworkManager.currentStamina.Value = maxStamina;
-        PlayerUIManager.instance.playerUIHUDManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
-
-        //health
-        maxHealth = playerStatManager.CalculateHealthBasedOnVigorLevel(currentCharacterData.vigor);
-        playerNetworkManager.maxHealth.Value = maxHealth;
-        playerNetworkManager.currentHealth.Value = maxHealth;
-        PlayerUIManager.instance.playerUIHUDManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
-
-        //FP
-        maxFocusPoints = playerStatManager.CalculateFocusPointsBasedOnMindLevel(currentCharacterData.mind);
-        playerNetworkManager.maxFocusPoints.Value = maxFocusPoints;
-        playerNetworkManager.currentFocusPoints.Value = maxFocusPoints;
-        PlayerUIManager.instance.playerUIHUDManager.SetMaxFPValue(playerNetworkManager.maxFocusPoints.Value);
-        */
     }
 }

@@ -2,7 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 public class PlayerUIManager : MonoBehaviour
 {
-    public static PlayerUIManager instance { get; private set; }
+    public static PlayerUIManager instance;
 
     [Header("NETWORK JOIN")]
     [SerializeField] bool startGameAsClient;

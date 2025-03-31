@@ -1,14 +1,16 @@
 using UnityEngine;
 
-public class WorldSoundFXManager : MonoBehaviour
+public class WorldSFXManager : MonoBehaviour
 {
-    public static WorldSoundFXManager instance;
+    public static WorldSFXManager instance;
 
-    [Header("Action Sounds")]
+    [Header("Player Action Sounds")]
     [SerializeField] public AudioClip rollingSFX;
     [SerializeField] public AudioClip[] footstepClips;
     [SerializeField] public AudioClip[] walkingClips;
     [SerializeField] public AudioClip[] backstepClips;
+
+    //[Header("Character Action Sounds")]
 
     private void Awake()
     {
