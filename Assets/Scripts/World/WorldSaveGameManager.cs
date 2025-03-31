@@ -7,8 +7,7 @@ namespace SaveGameManager
     public class WorldSaveGameManager : MonoBehaviour
     {
         public static WorldSaveGameManager instance;
-
-        [SerializeField] PlayerManager player;
+        [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [Header("SAVE/LOAD")]
         [SerializeField] bool saveGame;
         [SerializeField] bool loadGame;
@@ -46,6 +45,7 @@ namespace SaveGameManager
             {
                 Destroy(gameObject);
             }
+            playerNetworkManager = GetComponent<PlayerNetworkManager>();
         }
         private void Update()
         {
@@ -122,16 +122,33 @@ namespace SaveGameManager
 
             StartCoroutine(LoadWorldScene());
         }
-
         public void SaveGame()
         {
             saveFileName = DecideCharacterFileName(currentCharacterSlot);
+            // Check if this is the local player
+            PlayerManager localPlayer = null;
+            PlayerManager[] allPlayers = FindObjectsByType<PlayerManager>(FindObjectsSortMode.None);
+
+            foreach (var playerManager in allPlayers)
+            {
+                PlayerNetworkManager networkManager = playerManager.GetComponent<PlayerNetworkManager>();
+                if (networkManager.IsServer)
+                {
+                    localPlayer = playerManager;
+                    break;
+                }
+            }
+            if (localPlayer == null)
+            {
+                Debug.Log("Cannot save as client. You must return to your world first.");
+                return;
+            }
 
             saveFileDataWriter = new SaveFileDataWriter();
             saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
             saveFileDataWriter.saveFileName = saveFileName;
 
-            player.SavePlayerData(ref currentCharacterData);
+            localPlayer.SavePlayerData(ref currentCharacterData);
 
             saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
         }

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+    [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerStatManager playerStatManager;
 
     protected override void Awake()
@@ -12,8 +12,8 @@ public class PlayerManager : CharacterManager
         base.Awake();
 
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
-        playerAnimationManager = GetComponent<PlayerAnimationManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
+        playerAnimationManager = GetComponent<PlayerAnimationManager>();
         playerStatManager = GetComponent<PlayerStatManager>();
     }
 
@@ -67,7 +67,6 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.maxFocusPoints.Value = maxFocusPoints;
         playerNetworkManager.currentFocusPoints.Value = maxFocusPoints;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxFPValue(playerNetworkManager.maxFocusPoints.Value);
-
     }
     public override void OnNetworkDespawn()
     {
@@ -88,16 +87,11 @@ public class PlayerManager : CharacterManager
         if (!IsOwner)
             return;
         base.LateUpdate();
-
         PlayerCamera.instance.HandleAllCameraActions();
     }
 
     public void SavePlayerData(ref CharacterSaveData currentCharacterData)
     {
-        if (playerNetworkManager == null)
-        {
-            playerNetworkManager = GetComponent<PlayerNetworkManager>();
-        }
         currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
         currentCharacterData.xPosition = transform.position.x;
         currentCharacterData.yPosition = transform.position.y;
@@ -110,8 +104,6 @@ public class PlayerManager : CharacterManager
         currentCharacterData.vigor = playerNetworkManager.vigor.Value;
         currentCharacterData.endurance = playerNetworkManager.endurance.Value;
         currentCharacterData.mind = playerNetworkManager.mind.Value;
-
-        Debug.Log("it saved");
     }
     public void LoadPlayerData(ref CharacterSaveData currentCharacterData)
     {
