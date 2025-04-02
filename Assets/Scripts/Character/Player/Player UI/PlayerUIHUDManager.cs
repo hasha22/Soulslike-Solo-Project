@@ -19,16 +19,16 @@ public class PlayerUIHUDManager : MonoBehaviour
     {
         focusPointsBar.SetStat(Mathf.RoundToInt(newValue));
     }
-    public void SetMaxStaminaValue(int maxStamina)
+    public void SetMaxStaminaValue(int maxStamina, float currentStamina)
     {
-        staminaBar.SetMaxStat(maxStamina);
+        staminaBar.SetMaxStat(maxStamina, currentStamina);
     }
-    public void SetMaxHealthValue(int maxHealth)
+    public void SetMaxHealthValue(int maxHealth, float currentHealth)
     {
-        healthBar.SetMaxStat(maxHealth);
+        healthBar.SetMaxStat(maxHealth, currentHealth);
     }
-    public void SetMaxFPValue(int maxFocusPoints)
+    public void SetMaxFPValue(int maxFocusPoints, float currentFocusPoints)
     {
-        focusPointsBar.SetMaxStat(maxFocusPoints);
+        focusPointsBar.SetMaxStat(maxFocusPoints, currentFocusPoints);
     }
 }

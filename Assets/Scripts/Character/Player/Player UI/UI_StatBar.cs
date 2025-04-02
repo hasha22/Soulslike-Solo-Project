@@ -26,10 +26,10 @@ public class UI_StatBar : MonoBehaviour
     {
         slider.value = newValue;
     }
-    public virtual void SetMaxStat(int maxValue)
+    public virtual void SetMaxStat(int maxValue, float currentValue)
     {
         slider.maxValue = maxValue;
-        slider.value = maxValue;
+        slider.value = currentValue;
 
         if (scaleBarLengthWithStats)
         {

@@ -263,6 +263,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "db3c99ef-4467-412f-9eb2-362587a2c367",
+            "actions": [
+                {
+                    "name": "Backspace",
+                    "type": "Button",
+                    "id": "17cf0475-a99e-4978-920a-1770fc8b2b90",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "928d5602-6767-4b39-b802-6d96b3d1598e",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Backspace",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

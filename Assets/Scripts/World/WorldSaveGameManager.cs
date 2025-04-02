@@ -1,3 +1,4 @@
+using StartGame;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ namespace SaveGameManager
     {
         public static WorldSaveGameManager instance;
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
+        [HideInInspector] public PlayerManager player;
         [Header("SAVE/LOAD")]
         [SerializeField] bool saveGame;
         [SerializeField] bool loadGame;
@@ -21,7 +23,7 @@ namespace SaveGameManager
         [Header("Current Character Data")]
         public CharacterSaveData currentCharacterData;
         public CharacterSlots currentCharacterSlot;
-        private string saveFileName;
+        public string saveFileName;
 
         [Header("Character Slots")]
         public CharacterSaveData characterSlot01;
@@ -69,57 +71,159 @@ namespace SaveGameManager
         }
         public string DecideCharacterFileName(CharacterSlots characterSlot)
         {
+            string fileName = "";
             switch (characterSlot)
             {
                 case CharacterSlots.CharacterSlot_01:
-                    saveFileName = "CharacterSlot_01";
+                    fileName = "CharacterSlot_01";
                     break;
                 case CharacterSlots.CharacterSlot_02:
-                    saveFileName = "CharacterSlot_02";
+                    fileName = "CharacterSlot_02";
                     break;
                 case CharacterSlots.CharacterSlot_03:
-                    saveFileName = "CharacterSlot_03";
+                    fileName = "CharacterSlot_03";
                     break;
                 case CharacterSlots.CharacterSlot_04:
-                    saveFileName = "CharacterSlot_04";
+                    fileName = "CharacterSlot_04";
                     break;
                 case CharacterSlots.CharacterSlot_05:
-                    saveFileName = "CharacterSlot_05";
+                    fileName = "CharacterSlot_05";
                     break;
                 case CharacterSlots.CharacterSlot_06:
-                    saveFileName = "CharacterSlot_06";
+                    fileName = "CharacterSlot_06";
                     break;
                 case CharacterSlots.CharacterSlot_07:
-                    saveFileName = "CharacterSlot_07";
+                    fileName = "CharacterSlot_07";
                     break;
                 case CharacterSlots.CharacterSlot_08:
-                    saveFileName = "CharacterSlot_08";
+                    fileName = "CharacterSlot_08";
                     break;
                 case CharacterSlots.CharacterSlot_09:
-                    saveFileName = "CharacterSlot_09";
+                    fileName = "CharacterSlot_09";
                     break;
                 case CharacterSlots.CharacterSlot_10:
-                    saveFileName = "CharacterSlot_10";
+                    fileName = "CharacterSlot_10";
                     break;
             }
-            return saveFileName;
+            return fileName;
         }
-
-        public void NewGame()
+        public void AttemptToCreateNewGame()
         {
-            saveFileName = DecideCharacterFileName(currentCharacterSlot);
-            currentCharacterData = new CharacterSaveData();
-        }
+            saveFileDataWriter = new SaveFileDataWriter();
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
 
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_01);
+            saveFileDataWriter.saveFileName = saveFileName;
+
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 1 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_01;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_02);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 2 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_02;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_03);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 3 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_03;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_04);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 4 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_04;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_05);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 5 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_05;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_06);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 6 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_06;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_07);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 7 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_07;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_08);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 8 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_08;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_09);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 9 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_09;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            saveFileName = DecideCharacterFileName(CharacterSlots.CharacterSlot_10);
+            saveFileDataWriter.saveFileName = saveFileName;
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                Debug.Log("File 10 doesn't exist. Creating character file...");
+                currentCharacterSlot = CharacterSlots.CharacterSlot_10;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+            TitleScreenManager.instance.DisplayPopUp();
+        }
         public void LoadGame()
         {
             saveFileName = DecideCharacterFileName(currentCharacterSlot);
             saveFileDataWriter = new SaveFileDataWriter();
-            //works on multiple machine types
+
             saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
             saveFileDataWriter.saveFileName = saveFileName;
-            currentCharacterData = saveFileDataWriter.LoadSaveFile();
 
+            currentCharacterData = saveFileDataWriter.LoadSaveFile();
             StartCoroutine(LoadWorldScene());
         }
         public void SaveGame()
@@ -152,7 +256,14 @@ namespace SaveGameManager
 
             saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
         }
+        public void DeleteGame(CharacterSlots characterSlot)
+        {
+            saveFileDataWriter = new SaveFileDataWriter();
+            saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+            saveFileDataWriter.saveFileName = DecideCharacterFileName(characterSlot);
 
+            saveFileDataWriter.DeleteSaveFile();
+        }
         private void LoadAllCharacterProfiles()
         {
             saveFileDataWriter = new SaveFileDataWriter();
@@ -180,10 +291,20 @@ namespace SaveGameManager
         public IEnumerator LoadWorldScene()
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+            //This is a temporary fix. If the player starts a new game, currentCharacterData's values are null.
+            // Will create a better system later.
+            if (currentCharacterData.vigor != 0)
+            {
+                Debug.Log("Loading Character...");
+                player.LoadPlayerData(ref currentCharacterData);
+            }
+            else
+            {
+                player.CreatePlayerData(ref currentCharacterData);
+            }
 
             yield return null;
         }
-
         public int GetWorldSceneIndex()
         {
             return worldSceneIndex;

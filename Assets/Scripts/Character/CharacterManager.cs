@@ -11,6 +11,7 @@ public class CharacterManager : NetworkBehaviour
     public bool isPerformingAction = false;
     public bool canRotate = true;
     public bool canMove = true;
+    public bool hadLoadedPosition = false;
 
     protected virtual void Awake()
     {

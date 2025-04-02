@@ -4,7 +4,7 @@ using UnityEngine;
 public class CharacterSaveData
 {
     [Header("Character Name")]
-    public string characterName;
+    public string characterName = "Character";
 
     [Header("Time Played")]
     public float secondsPlayer;
@@ -15,6 +15,9 @@ public class CharacterSaveData
     public float zPosition;
 
     [Header("Resources")]
+    public int maxHealth;
+    public int maxStamina;
+    public int maxFocusPoints;
     public float currentHealth;
     public float currentStamina;
     public float currentFocusPoints;
