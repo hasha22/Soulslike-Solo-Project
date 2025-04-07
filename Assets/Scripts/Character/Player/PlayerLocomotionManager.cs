@@ -12,6 +12,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
 
+    [Header("Walking & Running")]
     [SerializeField] float walkingSpeed = 1.2f;
     [SerializeField] float runningSpeed = 2.5f;
     [SerializeField] float sprintingSpeed = 4f;
@@ -21,6 +22,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Dodge")]
     private Vector3 rollDirection;
     [SerializeField] float dodgeStaminaCost = 25;
+    [SerializeField] float jumpStaminaCost = 20;
     protected override void Awake()
     {
         base.Awake();
@@ -129,7 +131,27 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
         player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
     }
+    public void AttemptToPerformJump()
+    {
+        //will be likely changed when i add combat
+        if (player.isPerformingAction)
+            return;
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+            return;
+        if (player.isJumping)
+            return;
+        if (!player.isGrounded)
+            return;
 
+        player.playerAnimationManager.PlayActionAnimation("Jump_start", false);
+        player.isJumping = true;
+
+        player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+    }
+    public void ApplyJumpVelocity()
+    {
+
+    }
     public void HandleSprinting()
     {
         if (player.isPerformingAction)

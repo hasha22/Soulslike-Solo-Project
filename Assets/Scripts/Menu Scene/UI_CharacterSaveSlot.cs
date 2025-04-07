@@ -161,6 +161,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
     }
     public void SelectCurrentSlot()
     {
+        Debug.Log("Selected character slot...");
         TitleScreenManager.instance.SelectCharacterSlot(characterSlot);
     }
 }

@@ -23,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isDodging = false;
     public bool isSprinting = false;
     public bool isWalking = false;
+    public bool isJumping = false;
 
     private void Awake()
     {
@@ -62,10 +63,14 @@ public class PlayerInputManager : MonoBehaviour
 
             inputControls.PlayerControls.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             inputControls.PlayerCamera.CameraControls.performed += i => cameraInput = i.ReadValue<Vector2>();
+
             inputControls.PlayerActions.Dodge.performed += i => isDodging = !isDodging;
             inputControls.PlayerActions.Walk.performed += i => isWalking = !isWalking;
+
             inputControls.PlayerActions.Sprint.performed += i => isSprinting = true;
             inputControls.PlayerActions.Sprint.canceled += i => isSprinting = false;
+
+            inputControls.PlayerActions.Jump.performed += i => isJumping = true;
 
             inputControls.Enable();
         }
@@ -94,7 +99,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleMovementInput();
         HandleCameraInput();
         HandleDodgeInput();
-        HandleSprinting();
+        HandleSprintingInput();
+        HandleJumpingInput();
     }
     private void HandleMovementInput()
     {
@@ -135,8 +141,7 @@ public class PlayerInputManager : MonoBehaviour
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
     }
-
-    private void HandleSprinting()
+    private void HandleSprintingInput()
     {
         if (isSprinting)
         {
@@ -145,6 +150,14 @@ public class PlayerInputManager : MonoBehaviour
         else if (player != null)
         {
             player.playerNetworkManager.isSprinting.Value = false;
+        }
+    }
+    private void HandleJumpingInput()
+    {
+        if (isJumping)
+        {
+            isJumping = false;
+            player.playerLocomotionManager.AttemptToPerformJump();
         }
     }
 }
