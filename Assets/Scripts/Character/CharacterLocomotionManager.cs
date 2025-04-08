@@ -5,7 +5,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     CharacterManager character;
 
     [Header("Ground Check & Jumping ")]
-    [SerializeField] float gravityForce = -5.55f;
+    [SerializeField] protected float gravityForce = -5.55f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float groundCheckSphereRadius = 1;
     [SerializeField] protected Vector3 yVelocity; //falling and jumping force velocity 
@@ -31,7 +31,7 @@ public class CharacterLocomotionManager : MonoBehaviour
         }
         else
         {
-            if (!character.isJumping && !fallingVelocitySet)
+            if (!character.characterNetworkManager.isJumping.Value && !fallingVelocitySet)
             {
                 fallingVelocitySet = true;
                 yVelocity.y = fallStartYVelocity;

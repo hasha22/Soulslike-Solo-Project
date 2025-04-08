@@ -51,6 +51,13 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
         playerNetworkManager.currentFocusPoints.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
 
+        //if connecting as client
+        if (IsOwner && !IsServer)
+        {
+            Debug.Log("Loading client data...");
+            LoadPlayerData(ref PlayerUIManager.instance.clientCharacterData);
+        }
+
     }
     public override void OnNetworkDespawn()
     {
@@ -144,15 +151,12 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.maxStamina.Value = currentCharacterData.maxStamina;
         playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxStaminaValue(currentCharacterData.maxStamina, currentCharacterData.currentStamina);
-
         playerNetworkManager.maxHealth.Value = currentCharacterData.maxHealth;
         playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxHealthValue(currentCharacterData.maxHealth, currentCharacterData.currentHealth);
-
         playerNetworkManager.maxFocusPoints.Value = currentCharacterData.maxFocusPoints;
         playerNetworkManager.currentFocusPoints.Value = currentCharacterData.currentFocusPoints;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxFPValue(currentCharacterData.maxFocusPoints, currentCharacterData.currentFocusPoints);
-
         playerNetworkManager.vigor.Value = currentCharacterData.vigor;
         playerNetworkManager.endurance.Value = currentCharacterData.endurance;
         playerNetworkManager.mind.Value = currentCharacterData.mind;

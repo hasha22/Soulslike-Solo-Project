@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ResetActionFlag : StateMachineBehaviour
+public class ResetIsJumping : StateMachineBehaviour
 {
     CharacterManager character;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -10,11 +10,10 @@ public class ResetActionFlag : StateMachineBehaviour
         {
             character = animator.GetComponent<CharacterManager>();
         }
-
-        //Called when action ends
-        character.isPerformingAction = false;
-        character.canMove = true;
-        character.canRotate = true;
+        if (character.IsOwner)
+        {
+            character.characterNetworkManager.isJumping.Value = false;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

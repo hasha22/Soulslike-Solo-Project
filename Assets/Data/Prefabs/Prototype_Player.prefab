@@ -2164,13 +2164,14 @@ MonoBehaviour:
   verticalMovement: 0
   horizontalMovement: 0
   moveAmount: 0
+  rotationSpeed: 12
+  jumpStaminaCost: 20
+  jumpHeight: 2
   walkingSpeed: 0.5
   runningSpeed: 1
   sprintingSpeed: 2
-  rotationSpeed: 12
-  sprintingStaminaCost: 5
+  sprintingStaminaCost: 12
   dodgeStaminaCost: 25
-  jumpStaminaCost: 20
 --- !u!114 &5068403513811317674
 MonoBehaviour:
   m_ObjectHideFlags: 0
