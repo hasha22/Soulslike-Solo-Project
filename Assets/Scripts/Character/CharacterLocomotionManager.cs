@@ -11,6 +11,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] protected Vector3 yVelocity; //falling and jumping force velocity 
     [SerializeField] protected float groundedYVelocity = -20;
     [SerializeField] protected float fallStartYVelocity = -5;
+
     protected bool fallingVelocitySet = false;
     protected float inAirTimer = 0;
     protected virtual void Awake()

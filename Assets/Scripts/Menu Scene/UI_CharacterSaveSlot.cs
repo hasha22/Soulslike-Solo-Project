@@ -12,6 +12,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
     [Header("Character Info")]
     public TextMeshProUGUI characterName;
     public TextMeshProUGUI timePlayed;
+    public TextMeshProUGUI characterSlotNumber;
 
     private void OnEnable()
     {
@@ -34,6 +35,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot01 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 1";
             }
             else
             {
@@ -47,6 +49,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot02 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 2";
             }
             else
             {
@@ -60,6 +63,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot03 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 3";
             }
             else
             {
@@ -73,6 +77,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot04 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 4";
             }
             else
             {
@@ -86,6 +91,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot05 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 5";
             }
             else
             {
@@ -99,6 +105,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot06 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 6";
             }
             else
             {
@@ -112,6 +119,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot07 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 7";
             }
             else
             {
@@ -125,6 +133,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot08 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 8";
             }
             else
             {
@@ -138,6 +147,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot09 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 9";
             }
             else
             {
@@ -151,6 +161,7 @@ public class UI_CharacterSaveSlot : MonoBehaviour
             {
                 WorldSaveGameManager.instance.characterSlot10 = saveFileDataWriter.LoadSaveFile();
                 characterName.text = WorldSaveGameManager.instance.characterSlot01.characterName;
+                characterSlotNumber.text = "Character Slot 10";
             }
             else
             {

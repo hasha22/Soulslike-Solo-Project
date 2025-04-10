@@ -148,13 +148,43 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (!player.isGrounded)
         {
-            Vector3 freeFallDirection;
+            Vector3 inputDirection = Vector3.zero;
+            float movementSpeed = 0f;
+            //only allows full freefall for forward movement
+            if (PlayerInputManager.instance.verticalInput > 0)
+            {
+                inputDirection += PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+                if (!PlayerInputManager.instance.isWalking)
+                {
+                    movementSpeed = freeFallSpeed;
+                }
+                else
+                {
+                    movementSpeed = freeFallSpeed * 0.2f;
+                }
+            }
+            //reduced speed when turning around in midair 
+            else if (PlayerInputManager.instance.horizontalInput != 0 || PlayerInputManager.instance.verticalInput < 0)
+            {
+                if (PlayerInputManager.instance.horizontalInput != 0)
+                    inputDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
 
-            freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
-            freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
-            freeFallDirection.y = 0;
+                if (PlayerInputManager.instance.verticalInput < 0)
+                    inputDirection += PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
 
-            player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+                movementSpeed = freeFallSpeed * 0.4f;
+            }
+            //applies rotation and movement in midair
+            if (inputDirection != Vector3.zero)
+            {
+                inputDirection.y = 0;
+                inputDirection.Normalize();
+
+                Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
+                player.transform.rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, 5f * Time.deltaTime);
+
+                player.characterController.Move(inputDirection * movementSpeed * Time.deltaTime);
+            }
         }
     }
     public void AttemptToPerformDodge()

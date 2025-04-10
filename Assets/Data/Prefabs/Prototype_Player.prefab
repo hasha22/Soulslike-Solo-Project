@@ -1991,6 +1991,8 @@ MonoBehaviour:
     m_InternalValue: 0
   isSprinting:
     m_InternalValue: 0
+  isJumping:
+    m_InternalValue: 0
   maxStamina:
     m_InternalValue: 0
   currentStamina:
@@ -2132,7 +2134,6 @@ MonoBehaviour:
   characterNetworkManager: {fileID: 0}
   player: {fileID: 0}
   isPerformingAction: 0
-  isJumping: 0
   isGrounded: 1
   canRotate: 1
   canMove: 1
@@ -2167,6 +2168,8 @@ MonoBehaviour:
   rotationSpeed: 12
   jumpStaminaCost: 20
   jumpHeight: 2
+  jumpForwardSpeed: 5
+  freeFallSpeed: 3
   walkingSpeed: 0.5
   runningSpeed: 1
   sprintingSpeed: 2
