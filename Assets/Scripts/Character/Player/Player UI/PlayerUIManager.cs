@@ -9,6 +9,7 @@ public class PlayerUIManager : MonoBehaviour
     [SerializeField] public bool startGameAsClient;
 
     [HideInInspector] public PlayerUIHUDManager playerUIHUDManager;
+    [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
 
     //Temporary client data
     private SaveFileDataWriter saveFileDataWriter;
@@ -21,6 +22,7 @@ public class PlayerUIManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             playerUIHUDManager = GetComponentInChildren<PlayerUIHUDManager>();
+            playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
         else
         {

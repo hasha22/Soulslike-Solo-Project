@@ -1910,6 +1910,7 @@ GameObject:
   - component: {fileID: 1858977474774539385}
   - component: {fileID: 5068403513811317674}
   - component: {fileID: 3011204550580616316}
+  - component: {fileID: 5485598045727394986}
   - component: {fileID: 811469416767110587}
   - component: {fileID: 578986219959200346}
   - component: {fileID: 3897625176042786316}
@@ -2201,6 +2202,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaRegenerationDelay: 2
   staminaRegenerationAmount: 1
+--- !u!114 &5485598045727394986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8834627601471729450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe1e10abd0986348ad02387d7ba9816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: 8f55f54823559e54d81c4d507d19ad29, type: 2}
+  processEffect: 0
 --- !u!114 &811469416767110587
 MonoBehaviour:
   m_ObjectHideFlags: 0

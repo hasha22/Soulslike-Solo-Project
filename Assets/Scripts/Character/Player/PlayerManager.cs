@@ -1,8 +1,12 @@
 using SaveGameManager;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
+    [Header("Debug Menu")]
+    [SerializeField] bool respawnCharacter = false;
+
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
@@ -29,6 +33,8 @@ public class PlayerManager : CharacterManager
         }
         playerLocomotionManager.HandleAllMovement();
         playerStatManager.RegenerateStamina();
+
+        DebugMenu();
     }
     public override void OnNetworkSpawn()
     {
@@ -51,6 +57,8 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
         playerNetworkManager.currentFocusPoints.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
 
+        playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+
         //if connecting as client
         if (IsOwner && !IsServer)
         {
@@ -58,6 +66,15 @@ public class PlayerManager : CharacterManager
             LoadPlayerData(ref PlayerUIManager.instance.clientCharacterData);
         }
 
+    }
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation)
+    {
+        if (IsOwner)
+        {
+            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+        }
+
+        return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
     public override void OnNetworkDespawn()
     {
@@ -151,14 +168,38 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.maxStamina.Value = currentCharacterData.maxStamina;
         playerNetworkManager.currentStamina.Value = currentCharacterData.currentStamina;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxStaminaValue(currentCharacterData.maxStamina, currentCharacterData.currentStamina);
+
         playerNetworkManager.maxHealth.Value = currentCharacterData.maxHealth;
         playerNetworkManager.currentHealth.Value = currentCharacterData.currentHealth;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxHealthValue(currentCharacterData.maxHealth, currentCharacterData.currentHealth);
+
         playerNetworkManager.maxFocusPoints.Value = currentCharacterData.maxFocusPoints;
         playerNetworkManager.currentFocusPoints.Value = currentCharacterData.currentFocusPoints;
         PlayerUIManager.instance.playerUIHUDManager.SetMaxFPValue(currentCharacterData.maxFocusPoints, currentCharacterData.currentFocusPoints);
+
         playerNetworkManager.vigor.Value = currentCharacterData.vigor;
         playerNetworkManager.endurance.Value = currentCharacterData.endurance;
         playerNetworkManager.mind.Value = currentCharacterData.mind;
+    }
+    public override void ReviveCharacter()
+    {
+        base.ReviveCharacter();
+
+        if (IsOwner)
+        {
+            playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+            playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+            playerNetworkManager.currentFocusPoints.Value = playerNetworkManager.maxFocusPoints.Value;
+
+            playerAnimationManager.PlayActionAnimation("New State", false);
+        }
+    }
+    private void DebugMenu()
+    {
+        if (respawnCharacter)
+        {
+            respawnCharacter = false;
+            ReviveCharacter();
+        }
     }
 }

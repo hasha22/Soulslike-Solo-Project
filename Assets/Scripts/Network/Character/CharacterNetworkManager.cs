@@ -48,6 +48,20 @@ public class CharacterNetworkManager : NetworkBehaviour
         networkTransform = GetComponent<NetworkTransform>();
         character = GetComponent<CharacterManager>();
     }
+    public void CheckHP(float oldValue, float newValue)
+    {
+        if (currentHealth.Value <= 0)
+        {
+            StartCoroutine(character.ProcessDeathEvent(false));
+        }
+        if (character.IsOwner)
+        {
+            if (currentHealth.Value > maxHealth.Value)
+            {
+                currentHealth.Value = maxHealth.Value;
+            }
+        }
+    }
     [Rpc(SendTo.Everyone)]
     public void BroadcastActionAnimationRpc(ulong clientID, string animationID)
     {

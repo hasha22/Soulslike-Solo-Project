@@ -1,11 +1,17 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 public class CharacterManager : NetworkBehaviour
 {
+    [Header("Status")]
+    public NetworkVariable<bool> isAlive = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public PlayerManager player;
+    [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+    [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -21,6 +27,8 @@ public class CharacterManager : NetworkBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
+        characterEffectsManager = GetComponent<CharacterEffectsManager>();
+        characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
     }
     protected virtual void Update()
     {
@@ -47,6 +55,22 @@ public class CharacterManager : NetworkBehaviour
     {
 
     }
+    public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation)
+    {
+        if (!IsOwner)
+            yield return null;
+        characterNetworkManager.currentHealth.Value = 0;
+        isAlive.Value = false;
 
+        if (!manuallySelectDeathAnimation)
+        {
+            characterAnimatorManager.PlayActionAnimation("Dead_01", true);
+        }
 
+        yield return new WaitForSeconds(5);
+    }
+    public virtual void ReviveCharacter()
+    {
+
+    }
 }
