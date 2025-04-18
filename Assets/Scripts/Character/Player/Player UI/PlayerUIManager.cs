@@ -3,7 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 public class PlayerUIManager : MonoBehaviour
 {
-    public static PlayerUIManager instance;
+    public static PlayerUIManager instance { get; private set; }
 
     [Header("NETWORK JOIN")]
     [SerializeField] public bool startGameAsClient;
@@ -36,9 +36,6 @@ public class PlayerUIManager : MonoBehaviour
         {
             startGameAsClient = false;
             NetworkManager.Singleton.Shutdown();
-
-            //Temporary fix to have client data loaded properly
-
             WorldSaveGameManager.instance.saveFileName = WorldSaveGameManager.instance.DecideCharacterFileName(WorldSaveGameManager.instance.currentCharacterSlot);
             saveFileDataWriter = new SaveFileDataWriter();
 
@@ -46,6 +43,7 @@ public class PlayerUIManager : MonoBehaviour
             saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.saveFileName;
 
             clientCharacterData = saveFileDataWriter.LoadSaveFile();
+            Debug.Log("Character name: " + clientCharacterData.characterName);
             NetworkManager.Singleton.StartClient();
         }
     }

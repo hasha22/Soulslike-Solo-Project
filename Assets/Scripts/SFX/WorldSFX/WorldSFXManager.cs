@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WorldSFXManager : MonoBehaviour
 {
-    public static WorldSFXManager instance;
+    public static WorldSFXManager instance { get; private set; }
 
     [Header("Player Action Sounds")]
     [SerializeField] public AudioClip rollingSFX;

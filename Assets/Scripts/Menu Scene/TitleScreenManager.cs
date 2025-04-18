@@ -7,7 +7,7 @@ namespace StartGame
 {
     public class TitleScreenManager : MonoBehaviour
     {
-        public static TitleScreenManager instance;
+        public static TitleScreenManager instance { get; private set; }
 
         [Header("Buttons")]
         [SerializeField] Button noCharacterSlotsOKButton;

@@ -13,7 +13,6 @@ public class TakeStaminaDamage : InstantCharacterEffect
     {
         if (character.IsOwner)
         {
-            Debug.Log("Character is taking: " + staminaDamage);
             character.characterNetworkManager.currentStamina.Value -= staminaDamage;
         }
     }

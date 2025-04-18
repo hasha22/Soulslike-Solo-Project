@@ -3,9 +3,11 @@ using UnityEngine;
 public class CharacterSFX : MonoBehaviour
 {
     private AudioSource audioSource;
+    [HideInInspector] public CharacterManager character;
     protected virtual void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        character = GetComponent<CharacterManager>();
     }
 
     public void PlayRollSoundFX()
@@ -14,8 +16,11 @@ public class CharacterSFX : MonoBehaviour
     }
     public void PlayFootstepSFX()
     {
-        int index = Random.Range(0, WorldSFXManager.instance.footstepClips.Length);
-        audioSource.PlayOneShot(WorldSFXManager.instance.footstepClips[index]);
+        if (!character.isPerformingAction)
+        {
+            int index = Random.Range(0, WorldSFXManager.instance.footstepClips.Length);
+            audioSource.PlayOneShot(WorldSFXManager.instance.footstepClips[index]);
+        }
     }
 
     public void PlayWalkSFX()

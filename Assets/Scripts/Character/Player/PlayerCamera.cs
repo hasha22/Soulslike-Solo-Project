@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour
 {
-    public static PlayerCamera instance;
+    public static PlayerCamera instance { get; private set; }
     public Camera cameraObject;
     public PlayerManager player;
 

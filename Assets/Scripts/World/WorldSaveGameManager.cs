@@ -1,5 +1,6 @@
 using StartGame;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +8,7 @@ namespace SaveGameManager
 {
     public class WorldSaveGameManager : MonoBehaviour
     {
-        public static WorldSaveGameManager instance;
+        public static WorldSaveGameManager instance { get; private set; }
         [HideInInspector] public PlayerNetworkManager playerNetworkManager;
         [HideInInspector] public PlayerManager player;
         [Header("SAVE/LOAD")]
@@ -48,6 +49,7 @@ namespace SaveGameManager
                 Destroy(gameObject);
             }
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            player = GetComponent<PlayerManager>();
         }
         private void Update()
         {
@@ -235,6 +237,7 @@ namespace SaveGameManager
 
             foreach (var playerManager in allPlayers)
             {
+                Debug.Log(allPlayers.Count());
                 PlayerNetworkManager networkManager = playerManager.GetComponent<PlayerNetworkManager>();
                 if (networkManager.IsServer)
                 {
@@ -292,7 +295,6 @@ namespace SaveGameManager
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
             //This is a temporary fix. If the player starts a new game, currentCharacterData's values are null.
-            // Will create a better system later.
             if (currentCharacterData.vigor != 0)
             {
                 Debug.Log("Loading Character...");

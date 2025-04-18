@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerInputManager : MonoBehaviour
 {
     InputControls inputControls;
-    public static PlayerInputManager instance;
+    public static PlayerInputManager instance { get; private set; }
     public PlayerManager player;
 
     [Header("Player Movement")]
