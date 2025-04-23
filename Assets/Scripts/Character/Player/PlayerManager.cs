@@ -11,6 +11,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerStatManager playerStatManager;
+    [HideInInspector] public PlayerInventoryManager playerInventoryManager;
 
     private Vector3 lastPosition;
 
@@ -22,6 +23,7 @@ public class PlayerManager : CharacterManager
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
         playerStatManager = GetComponent<PlayerStatManager>();
+        playerInventoryManager = GetComponent<PlayerInventoryManager>();
     }
 
     protected override void Update()
