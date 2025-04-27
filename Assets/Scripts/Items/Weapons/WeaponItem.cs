@@ -23,5 +23,8 @@ public class WeaponItem : Item
     //running attack, jumping attack, sneak attack etc.
     public int baseStaminaCost = 20;
 
+    [Header("Actions")]
+    public WeaponItemAction LeftClickAction;
+
 
 }

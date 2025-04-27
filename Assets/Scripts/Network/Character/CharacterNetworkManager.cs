@@ -6,6 +6,8 @@ using UnityEngine;
 public class CharacterNetworkManager : NetworkBehaviour
 {
     CharacterManager character;
+    PlayerInventoryManager characterInventoryManager;
+    PlayerEquipmentManager characterEquipmentManager;
     private NetworkTransform networkTransform;
 
     [Header("Position")]
@@ -47,6 +49,8 @@ public class CharacterNetworkManager : NetworkBehaviour
     {
         networkTransform = GetComponent<NetworkTransform>();
         character = GetComponent<CharacterManager>();
+        characterEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        characterInventoryManager = GetComponent<PlayerInventoryManager>();
     }
     public void CheckHP(float oldValue, float newValue)
     {
@@ -62,19 +66,65 @@ public class CharacterNetworkManager : NetworkBehaviour
             }
         }
     }
-    [Rpc(SendTo.Everyone)]
-    public void BroadcastActionAnimationRpc(ulong clientID, string animationID)
+    [ServerRpc]
+    public void NotifyServerOfAnimationServerRpc(ulong clientID, string animationID)
     {
-        if (clientID != NetworkManager.Singleton.LocalClientId)
+        if (IsServer)
         {
-            PerformActionAnimationFromServer(animationID);
+            PlayAnimationForAllClientsClientRpc(clientID, animationID);
         }
     }
-
+    [ClientRpc]
+    public void PlayAnimationForAllClientsClientRpc(ulong clientID, string animationID)
+    {
+        PerformActionAnimationFromServer(animationID);
+    }
     private void PerformActionAnimationFromServer(string animationID)
     {
         character.animator.CrossFade(animationID, 0.2f);
     }
+
+    [ServerRpc]
+    public void NotifyServerOfAttackAnimationServerRpc(ulong clientID, string animationID)
+    {
+        if (IsServer)
+        {
+            PlayAttackAnimationForAllClientsClientRpc(clientID, animationID);
+        }
+    }
+    [ClientRpc]
+    public void PlayAttackAnimationForAllClientsClientRpc(ulong clientID, string animationID)
+    {
+        if (clientID != NetworkManager.Singleton.LocalClientId)
+        {
+            PerformAttackActionAnimationFromServer(animationID);
+        }
+    }
+    private void PerformAttackActionAnimationFromServer(string animationID)
+    {
+        character.animator.CrossFade(animationID, 0.2f);
+    }
+
+
+    /*
+    public void EquipWeaponRpc(int weaponID)
+    {
+        WeaponItem selectedWeapon = WorldItemDatabase.instance.GetWeaponByID(weaponID);
+        if (selectedWeapon != null)
+        {
+            GameObject weaponObject = Instantiate(selectedWeapon.weaponModel);
+            NetworkObject netObj = weaponObject.GetComponent<NetworkObject>();
+            if (netObj != null)
+            {
+                // Spawn the weapon across the network
+                netObj.Spawn();
+                // Update the player's inventory or other systems
+                characterInventoryManager.currentRightHandWeapon = selectedWeapon;
+                characterEquipmentManager.rightHandWeaponModel = weaponObject;
+            }
+        }
+    }
+    */
 }
 
 

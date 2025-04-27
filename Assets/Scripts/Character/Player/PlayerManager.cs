@@ -6,12 +6,15 @@ public class PlayerManager : CharacterManager
 {
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
+    [SerializeField] bool switchRightWeapon = false;
 
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerStatManager playerStatManager;
     [HideInInspector] public PlayerInventoryManager playerInventoryManager;
+    [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
+    [HideInInspector] public PlayerCombatManager playerCombatManager;
 
     private Vector3 lastPosition;
 
@@ -24,6 +27,8 @@ public class PlayerManager : CharacterManager
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
         playerStatManager = GetComponent<PlayerStatManager>();
         playerInventoryManager = GetComponent<PlayerInventoryManager>();
+        playerEquipmentManager = GetComponent<PlayerEquipmentManager>();
+        playerCombatManager = GetComponent<PlayerCombatManager>();
     }
 
     protected override void Update()
@@ -61,6 +66,18 @@ public class PlayerManager : CharacterManager
 
         playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
 
+        playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponIDChange;
+        playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponIDChange;
+        playerNetworkManager.currentWeaponBeingUsed.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedIDChange;
+
+        //if joining game after instantiating weapon, load weapon model
+        if (IsOwner && !IsServer && playerNetworkManager.currentRightHandWeaponID.Value != 0)
+        {
+            int weaponID = player.playerNetworkManager.currentRightHandWeaponID.Value;
+            WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(weaponID));
+            player.playerInventoryManager.currentRightHandWeapon = newWeapon;
+            player.playerEquipmentManager.LoadRightWeapon();
+        }
         //if connecting as client
         if (IsOwner && !IsServer)
         {
@@ -91,6 +108,10 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentStamina.OnValueChanged -= playerStatManager.ResetStaminaRegenTimer;
         playerNetworkManager.currentHealth.OnValueChanged -= PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
         playerNetworkManager.currentFocusPoints.OnValueChanged -= PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
+
+        playerNetworkManager.currentRightHandWeaponID.OnValueChanged -= playerNetworkManager.OnCurrentRightHandWeaponIDChange;
+        playerNetworkManager.currentLeftHandWeaponID.OnValueChanged -= playerNetworkManager.OnCurrentLeftHandWeaponIDChange;
+        playerNetworkManager.currentWeaponBeingUsed.OnValueChanged -= playerNetworkManager.OnCurrentWeaponBeingUsedIDChange;
     }
     protected override void LateUpdate()
     {
@@ -202,6 +223,11 @@ public class PlayerManager : CharacterManager
         {
             respawnCharacter = false;
             ReviveCharacter();
+        }
+        if (switchRightWeapon)
+        {
+            switchRightWeapon = false;
+            playerEquipmentManager.SwitchRightWeapon();
         }
     }
 }

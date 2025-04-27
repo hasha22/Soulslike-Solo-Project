@@ -36,6 +36,17 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.canMove = false;
 
 
-        character.characterNetworkManager.BroadcastActionAnimationRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
+        character.characterNetworkManager.NotifyServerOfAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
+    }
+    public virtual void PlayAttackActionAnimation(string targetAnimation, bool isPerformingAction)
+    {
+        character.animator.CrossFade(targetAnimation, 0.2f);
+        //Stop character from performing an additional action 
+        character.isPerformingAction = isPerformingAction;
+        character.canRotate = false;
+        character.canMove = false;
+
+
+        character.characterNetworkManager.NotifyServerOfAttackAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
     }
 }

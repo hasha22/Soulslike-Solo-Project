@@ -16,7 +16,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 9e386d6a286d3fa4daafae05bd852dc9, type: 3}
   itemDescription: A balanced, widely-used standard straight sword. Inflicts reliable
     standard damage, as well as high thrust damage.
-  itemID: 0
+  itemID: 1
   weaponModel: {fileID: 5818679657367943435, guid: a8af3b8b077fbb3408d48feef7dd2b44, type: 3}
   strREQ: 10
   dexREQ: 10
@@ -29,3 +29,4 @@ MonoBehaviour:
   lightningDamage: 0
   poiseDamage: 0
   baseStaminaCost: 20
+  LeftClickAction: {fileID: 11400000, guid: 7a8f7d4d43b60ee4da31bb909fbc0a66, type: 2}

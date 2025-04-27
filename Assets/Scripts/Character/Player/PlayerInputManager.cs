@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isSprinting = false;
     public bool isWalking = false;
     public bool isJumping = false;
+    public bool LeftClickInput = false;
 
     private void Awake()
     {
@@ -86,6 +87,8 @@ public class PlayerInputManager : MonoBehaviour
 
             inputControls.PlayerActions.Jump.performed += i => isJumping = true;
 
+            inputControls.PlayerActions.LeftClick.performed += i => LeftClickInput = true;
+
             inputControls.Enable();
         }
     }
@@ -115,6 +118,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintingInput();
         HandleJumpingInput();
+        HandleLeftClickInput();
     }
     private void HandleMovementInput()
     {
@@ -172,6 +176,16 @@ public class PlayerInputManager : MonoBehaviour
         {
             isJumping = false;
             player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+    private void HandleLeftClickInput()
+    {
+        if (LeftClickInput && player != null)
+        {
+            LeftClickInput = false;
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+            player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.LeftClickAction, player.playerInventoryManager.currentRightHandWeapon);
         }
     }
 }
