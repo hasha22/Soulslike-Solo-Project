@@ -66,6 +66,8 @@ public class CharacterNetworkManager : NetworkBehaviour
             }
         }
     }
+
+    //Regular Animations
     [ServerRpc]
     public void NotifyServerOfAnimationServerRpc(ulong clientID, string animationID)
     {
@@ -84,6 +86,7 @@ public class CharacterNetworkManager : NetworkBehaviour
         character.animator.CrossFade(animationID, 0.2f);
     }
 
+    //Attack Animations
     [ServerRpc]
     public void NotifyServerOfAttackAnimationServerRpc(ulong clientID, string animationID)
     {
@@ -105,26 +108,74 @@ public class CharacterNetworkManager : NetworkBehaviour
         character.animator.CrossFade(animationID, 0.2f);
     }
 
-
-    /*
-    public void EquipWeaponRpc(int weaponID)
+    [ServerRpc(RequireOwnership = false)]
+    public void NotifyServerOfCharacterDamageServerRpc(
+        ulong damagedCharacterID,
+        ulong characterCausingDamageID,
+        float physicalDamage,
+        float magicalDamage,
+        float holyDamage,
+        float lightningDamage,
+        float fireDamage,
+        float poiseDamage,
+        float angleHitFrom,
+        float contactPointX,
+        float contactPointY,
+        float contactPointZ)
     {
-        WeaponItem selectedWeapon = WorldItemDatabase.instance.GetWeaponByID(weaponID);
-        if (selectedWeapon != null)
+        if (IsServer)
         {
-            GameObject weaponObject = Instantiate(selectedWeapon.weaponModel);
-            NetworkObject netObj = weaponObject.GetComponent<NetworkObject>();
-            if (netObj != null)
-            {
-                // Spawn the weapon across the network
-                netObj.Spawn();
-                // Update the player's inventory or other systems
-                characterInventoryManager.currentRightHandWeapon = selectedWeapon;
-                characterEquipmentManager.rightHandWeaponModel = weaponObject;
-            }
+            NotifyServerOfCharacterDamageClientRpc(damagedCharacterID, characterCausingDamageID, physicalDamage, magicalDamage, holyDamage, lightningDamage, fireDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
         }
     }
-    */
+    [ClientRpc]
+    public void NotifyServerOfCharacterDamageClientRpc(
+        ulong damagedCharacterID,
+        ulong characterCausingDamageID,
+        float physicalDamage,
+        float magicalDamage,
+        float holyDamage,
+        float lightningDamage,
+        float fireDamage,
+        float poiseDamage,
+        float angleHitFrom,
+        float contactPointX,
+        float contactPointY,
+        float contactPointZ)
+    {
+        ProcessCharacterDamageFromServer(damagedCharacterID, characterCausingDamageID, physicalDamage, magicalDamage, holyDamage, lightningDamage, fireDamage, poiseDamage, angleHitFrom, contactPointX, contactPointY, contactPointZ);
+    }
+    public void ProcessCharacterDamageFromServer(
+        ulong damagedCharacterID,
+        ulong characterCausingDamageID,
+        float physicalDamage,
+        float magicalDamage,
+        float holyDamage,
+        float lightningDamage,
+        float fireDamage,
+        float poiseDamage,
+        float angleHitFrom,
+        float contactPointX,
+        float contactPointY,
+        float contactPointZ)
+    {
+        CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
+        CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
+
+        TakeHealthDamage damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
+        damageEffect.physicalDamage = physicalDamage;
+        damageEffect.magicDamage = magicalDamage;
+        damageEffect.holyDamage = holyDamage;
+        damageEffect.lightningDamage = lightningDamage;
+        damageEffect.fireDamage = fireDamage;
+        damageEffect.poiseDamage = poiseDamage;
+        damageEffect.angleHitFrom = angleHitFrom;
+        damageEffect.contactPoint = new Vector3(contactPointX, contactPointY, contactPointZ);
+        damageEffect.characterCausingDamage = characterCausingDamage;
+
+        damagedCharacter.characterEffectsManager.ProcessInstantEffect(damageEffect);
+
+    }
 }
 
 

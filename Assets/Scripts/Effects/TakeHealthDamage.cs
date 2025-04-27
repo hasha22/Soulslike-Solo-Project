@@ -10,8 +10,8 @@ public class TakeHealthDamage : InstantCharacterEffect
     public float physicalDamage = 0; // will be split into the future 
     public float magicDamage = 0;
     public float holyDamage = 0;
-    public float fireDamage = 0;
     public float lightningDamage = 0;
+    public float fireDamage = 0;
     private int finalDamageDealt = 0;
 
     [Header("Animation")]

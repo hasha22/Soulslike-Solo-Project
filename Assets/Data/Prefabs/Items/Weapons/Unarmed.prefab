@@ -155,12 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982e111069feaf746b8d9680fe290634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 8254867431974923743}
   physicalDamage: 0
   magicDamage: 0
   holyDamage: 0
   fireDamage: 0
   lightningDamage: 0
   characterCausingDamage: {fileID: 0}
+  lightAttack01Modifier: 0
 --- !u!135 &8254867431974923743
 SphereCollider:
   m_ObjectHideFlags: 0

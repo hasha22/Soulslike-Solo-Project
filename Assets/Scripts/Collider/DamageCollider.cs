@@ -4,7 +4,7 @@ using UnityEngine;
 public class DamageCollider : MonoBehaviour
 {
     [Header("Collider")]
-    protected Collider damageCollider;
+    [SerializeField] protected Collider damageCollider;
 
     [Header("Damage Types")]
     public float physicalDamage = 0;
@@ -14,11 +14,16 @@ public class DamageCollider : MonoBehaviour
     public float lightningDamage = 0;
 
     [Header("Contact Point")]
-    private Vector3 contactPoint;
+    protected Vector3 contactPoint;
 
     [Header("Characters Damaged")]
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
-    private void OnTriggerEnter(Collider other)
+
+    protected virtual void Awake()
+    {
+
+    }
+    protected virtual void OnTriggerEnter(Collider other)
     {
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
         if (damageTarget != null)
@@ -36,9 +41,9 @@ public class DamageCollider : MonoBehaviour
 
         TakeHealthDamage damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
         damageEffect.physicalDamage = physicalDamage;
+        damageEffect.magicDamage = magicDamage;
         damageEffect.holyDamage = holyDamage;
         damageEffect.lightningDamage = lightningDamage;
-        damageEffect.magicDamage = magicDamage;
         damageEffect.fireDamage = fireDamage;
         damageEffect.contactPoint = contactPoint;
 

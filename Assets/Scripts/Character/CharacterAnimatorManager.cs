@@ -38,11 +38,12 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         character.characterNetworkManager.NotifyServerOfAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
     }
-    public virtual void PlayAttackActionAnimation(string targetAnimation, bool isPerformingAction)
+    public virtual void PlayAttackActionAnimation(AttackType attackType, string targetAnimation, bool isPerformingAction)
     {
         character.animator.CrossFade(targetAnimation, 0.2f);
         //Stop character from performing an additional action 
         character.isPerformingAction = isPerformingAction;
+        character.characterCombatManager.currentAttackType = attackType;
         character.canRotate = false;
         character.canMove = false;
 
