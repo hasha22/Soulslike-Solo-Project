@@ -226,6 +226,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Lock On",
+                    "type": "Button",
+                    "id": "6e36f280-a58b-4608-860d-14041efd3788",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Switch Right Weapon",
                     "type": "Button",
                     "id": "c555a30d-38cd-4cad-b828-5ca5ff059e65",
@@ -297,6 +306,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Left Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ce08722-f845-4b26-a10b-8ce93f36e55c",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lock On",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

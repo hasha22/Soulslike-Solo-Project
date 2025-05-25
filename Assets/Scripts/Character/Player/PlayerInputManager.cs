@@ -28,6 +28,10 @@ public class PlayerInputManager : MonoBehaviour
     public bool switchRightWeapon = false;
     public bool switchLeftWeapon = false;
 
+    [Header("Lock On Input")]
+    public bool isLockedOn = false;
+    private Coroutine lockOnCoroutine;
+
     private void Awake()
     {
         if (instance == null)
@@ -71,7 +75,6 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
     }
-
     private void OnEnable()
     {
         if (inputControls == null)
@@ -90,6 +93,7 @@ public class PlayerInputManager : MonoBehaviour
             inputControls.PlayerActions.Jump.performed += i => isJumping = true;
 
             inputControls.PlayerActions.LeftClick.performed += i => leftClickInput = true;
+            inputControls.PlayerActions.LockOn.performed += i => isLockedOn = true;
 
             inputControls.PlayerActions.SwitchRightWeapon.performed += i => switchRightWeapon = true;
             inputControls.PlayerActions.SwitchLeftWeapon.performed += i => switchLeftWeapon = true;
@@ -124,6 +128,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintingInput();
         HandleJumpingInput();
         HandleLeftClickInput();
+        HandleLockOnInput();
         HandleSwitchRightWeaponInput();
         HandleSwitchLeftWeaponInput();
     }
@@ -151,7 +156,14 @@ public class PlayerInputManager : MonoBehaviour
             return;
         }
         //not locked on, therefore no strafing 
-        player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount);
+        if (!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value)
+        {
+            player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount);
+        }
+        else
+        {
+            player.playerAnimationManager.UpdateAnimatorMovementParameters(horizontalInput, verticalInput);
+        }
     }
     private void HandleCameraInput()
     {
@@ -193,6 +205,46 @@ public class PlayerInputManager : MonoBehaviour
 
             player.playerNetworkManager.SetCharacterActionHand(true);
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.LeftClickAction, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+    private void HandleLockOnInput()
+    {
+        if (player == null)
+            return;
+        // Checks for dead target
+        if (player.playerNetworkManager.isLockedOn.Value)
+        {
+            if (player.playerCombatManager.currentTarget == null)
+                return;
+
+            if (!player.playerCombatManager.currentTarget.isAlive.Value)
+            {
+                player.playerNetworkManager.isLockedOn.Value = false;
+            }
+            // Attempts to find new target
+            if (lockOnCoroutine != null)
+                StopCoroutine(lockOnCoroutine);
+
+            lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
+        }
+        // Disables lock on
+        if (isLockedOn && player.playerNetworkManager.isLockedOn.Value)
+        {
+            isLockedOn = false;
+            PlayerCamera.instance.ClearLockOnTargets();
+            player.playerNetworkManager.isLockedOn.Value = false;
+            return;
+        }
+        // Enables lock on
+        if (isLockedOn && !player.playerNetworkManager.isLockedOn.Value)
+        {
+            isLockedOn = false;
+            PlayerCamera.instance.HandleCameraLockOnTargets();
+            if (PlayerCamera.instance.nearestLockOnTarget != null)
+            {
+                player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
+                player.playerNetworkManager.isLockedOn.Value = true;
+            }
         }
     }
     private void HandleSwitchRightWeaponInput()

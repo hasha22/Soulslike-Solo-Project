@@ -70,14 +70,14 @@ public class CharacterAnimatorManager : MonoBehaviour
     }
     public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue)
     {
-        float horizontalMovement = horizontalValue;
-        float verticalMovement = verticalValue;
+        float snappedHorizontal = horizontalValue;
+        float snappedVertical = verticalValue;
         if (character.characterNetworkManager.isSprinting.Value)
         {
-            verticalMovement = 2;
+            snappedVertical = 2;
         }
-        character.animator.SetFloat(horizontal, horizontalMovement, 0.1f, Time.deltaTime);
-        character.animator.SetFloat(vertical, verticalMovement, 0.1f, Time.deltaTime);
+        character.animator.SetFloat(horizontal, snappedHorizontal, 0.1f, Time.deltaTime);
+        character.animator.SetFloat(vertical, snappedVertical, 0.1f, Time.deltaTime);
 
     }
 

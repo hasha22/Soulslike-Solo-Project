@@ -7,8 +7,6 @@ public class PlayerManager : CharacterManager
 {
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
-    //[SerializeField] bool spawnDummy = false;
-    //[SerializeField] GameObject dummyPlayerPrefab;
 
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -46,41 +44,35 @@ public class PlayerManager : CharacterManager
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        if (!IsOwner)
-            return;
-        //NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
-        PlayerCamera.instance.player = this;
-        PlayerInputManager.instance.player = this;
-        WorldSaveGameManager.instance.player = this;
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+        if (IsOwner)
+        {
+            PlayerCamera.instance.player = this;
+            PlayerInputManager.instance.player = this;
+            WorldSaveGameManager.instance.player = this;
 
-        //updates max values of vigor/endurance/mind
-        playerNetworkManager.vigor.OnValueChanged += playerNetworkManager.SetNewVigorValue;
-        playerNetworkManager.endurance.OnValueChanged += playerNetworkManager.SetNewEnduranceValue;
-        playerNetworkManager.mind.OnValueChanged += playerNetworkManager.SetNewMindValue;
+            //updates max values of vigor/endurance/mind
+            playerNetworkManager.vigor.OnValueChanged += playerNetworkManager.SetNewVigorValue;
+            playerNetworkManager.endurance.OnValueChanged += playerNetworkManager.SetNewEnduranceValue;
+            playerNetworkManager.mind.OnValueChanged += playerNetworkManager.SetNewMindValue;
 
-        //updates UI based on health/stamina/fp changes
-        playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewStaminaValue;
-        playerNetworkManager.currentStamina.OnValueChanged += playerStatManager.ResetStaminaRegenTimer;
-        playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
-        playerNetworkManager.currentFocusPoints.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
+            //updates UI based on health/stamina/fp changes
+            playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewStaminaValue;
+            playerNetworkManager.currentStamina.OnValueChanged += playerStatManager.ResetStaminaRegenTimer;
+            playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewHealthValue;
+            playerNetworkManager.currentFocusPoints.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewFPValue;
+        }
 
         playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+
+        // Lock on
+        playerNetworkManager.isLockedOn.OnValueChanged += playerNetworkManager.OnIsLockedOnChanged;
+        playerNetworkManager.currentTargetNetworkObjectID.OnValueChanged += playerNetworkManager.OnLockOnTargetIDChanged;
 
         playerNetworkManager.currentRightHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentRightHandWeaponIDChange;
         playerNetworkManager.currentLeftHandWeaponID.OnValueChanged += playerNetworkManager.OnCurrentLeftHandWeaponIDChange;
         playerNetworkManager.currentWeaponBeingUsed.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedIDChange;
 
-        //if joining game after instantiating weapon, load weapon model
-        // doesn't work
-        /*
-        if (IsOwner && !IsServer && playerNetworkManager.currentRightHandWeaponID.Value != 0)
-        {
-            int weaponID = player.playerNetworkManager.currentRightHandWeaponID.Value;
-            WeaponItem newWeapon = Instantiate(WorldItemDatabase.instance.GetWeaponByID(weaponID));
-            player.playerInventoryManager.currentRightHandWeapon = newWeapon;
-            player.playerEquipmentManager.LoadRightWeapon();
-        }
-        */
         //if connecting as client
         if (IsOwner && !IsServer)
         {
@@ -90,44 +82,18 @@ public class PlayerManager : CharacterManager
     }
     private void OnClientConnectedCallback(ulong clientID)
     {
-        /*
         WorldGameSessionManager.instance.AddPlayer(this);
-        if (IsServer)
+
+        if (!IsServer && IsOwner)
         {
-            // Find the newly connected client's PlayerManager
-            PlayerManager newPlayer = null;
             foreach (var player in WorldGameSessionManager.instance.players)
             {
-                if (player.OwnerClientId == clientID)
+                if (player != this)
                 {
-                    newPlayer = player;
-                    break;
-                }
-            }
-
-            if (newPlayer != null)
-            {
-                // Sync existing players' weapons to the new client
-                foreach (var existingPlayer in WorldGameSessionManager.instance.players)
-                {
-                    if (existingPlayer != newPlayer)
-                    {
-                        existingPlayer.SyncWeaponsToClientClientRpc(clientID);
-                    }
+                    player.LoadPlayerWhenJoining();
                 }
             }
         }
- 
-        if (!IsServer && IsOwner)
-        {
-        foreach (var player in WorldGameSessionManager.instance.players)
-        {
-            if (player != this)
-            {
-                Debug.Log("Reloading weapons...");
-                player.LoadPlayerWhenJoining();
-            }
-        }*/
 
     }
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation)
@@ -253,6 +219,12 @@ public class PlayerManager : CharacterManager
         //Sync weapons
         playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
         playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+
+        //Sync lock on
+        if (playerNetworkManager.isLockedOn.Value)
+        {
+            playerNetworkManager.OnLockOnTargetIDChanged(0, playerNetworkManager.currentTargetNetworkObjectID.Value);
+        }
     }
     public override void ReviveCharacter()
     {
@@ -260,6 +232,7 @@ public class PlayerManager : CharacterManager
 
         if (IsOwner)
         {
+            isAlive.Value = true;
             playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
             playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
             playerNetworkManager.currentFocusPoints.Value = playerNetworkManager.maxFocusPoints.Value;
@@ -282,15 +255,6 @@ public class PlayerManager : CharacterManager
         }
         */
     }
-    /*
-    private void SpawnTestDummy()
-    {
-        var dummy = Instantiate(dummyPlayerPrefab, new Vector3(5, 0, 5), Quaternion.identity);
-        var netObj = dummy.GetComponent<NetworkObject>();
-        netObj.Spawn(false); // No ownership
-        dummy.GetComponent<PlayerManager>().isDummy = true;
-    }
-    */
     // doesn't work
     [ClientRpc]
     private void SyncWeaponsToClientClientRpc(ulong targetClientId)

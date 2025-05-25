@@ -15,13 +15,13 @@ public class CharacterManager : NetworkBehaviour
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterSFX characterSFX;
+    [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
     public bool isGrounded = true;
     public bool canRotate = true;
     public bool canMove = true;
-    public bool isDummy = false;
     public bool hadLoadedPosition = false;
 
     protected virtual void Awake()
@@ -35,6 +35,7 @@ public class CharacterManager : NetworkBehaviour
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterCombatManager = GetComponent<CharacterCombatManager>();
         characterSFX = GetComponent<CharacterSFX>();
+        characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
     protected virtual void Start()
     {
@@ -72,10 +73,8 @@ public class CharacterManager : NetworkBehaviour
         characterNetworkManager.currentHealth.Value = 0;
         isAlive.Value = false;
 
-        Debug.Log(manuallySelectDeathAnimation);
         if (!manuallySelectDeathAnimation)
         {
-            Debug.Log("Playing death animation");
             characterAnimatorManager.PlayActionAnimation("Dead_01", true);
         }
 

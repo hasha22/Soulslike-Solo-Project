@@ -23,6 +23,9 @@ public class CharacterNetworkManager : NetworkBehaviour
     public float networkPositionSmoothTime = 0.1f;
     public float networkRotationSmoothTime = 0.1f;
 
+    [Header("Target")]
+    public NetworkVariable<ulong> currentTargetNetworkObjectID = new NetworkVariable<ulong>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     [Header("Animator")]
     public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -31,6 +34,7 @@ public class CharacterNetworkManager : NetworkBehaviour
     [Header("Flags")]
     public NetworkVariable<bool> isSprinting = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<bool> isJumping = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Resources")]
     public NetworkVariable<int> maxStamina = new NetworkVariable<int>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -66,7 +70,20 @@ public class CharacterNetworkManager : NetworkBehaviour
             }
         }
     }
-
+    public void OnLockOnTargetIDChanged(ulong oldID, ulong newID)
+    {
+        if (!IsOwner)
+        {
+            character.characterCombatManager.currentTarget = NetworkManager.Singleton.SpawnManager.SpawnedObjects[newID].gameObject.GetComponent<CharacterManager>();
+        }
+    }
+    public void OnIsLockedOnChanged(bool oldValue, bool isLockedOn)
+    {
+        if (!isLockedOn)
+        {
+            character.characterCombatManager.currentTarget = null;
+        }
+    }
     //Regular Animations
     [ServerRpc]
     public void NotifyServerOfAnimationServerRpc(ulong clientID, string animationID)

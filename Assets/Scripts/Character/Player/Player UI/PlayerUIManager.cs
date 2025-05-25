@@ -14,7 +14,6 @@ public class PlayerUIManager : MonoBehaviour
     //Temporary client data
     private SaveFileDataWriter saveFileDataWriter;
     [HideInInspector] public CharacterSaveData clientCharacterData;
-
     private void Awake()
     {
         if (instance == null)
@@ -29,7 +28,6 @@ public class PlayerUIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Update()
     {
         if (startGameAsClient)
@@ -43,7 +41,6 @@ public class PlayerUIManager : MonoBehaviour
             saveFileDataWriter.saveFileName = WorldSaveGameManager.instance.saveFileName;
 
             clientCharacterData = saveFileDataWriter.LoadSaveFile();
-            Debug.Log("Character name: " + clientCharacterData.characterName);
             NetworkManager.Singleton.StartClient();
         }
     }
