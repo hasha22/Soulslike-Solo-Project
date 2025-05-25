@@ -2622,13 +2622,15 @@ MonoBehaviour:
   player: {fileID: 0}
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
+  characterCombatManager: {fileID: 0}
+  characterSFX: {fileID: 0}
   isPerformingAction: 0
   isGrounded: 1
   canRotate: 1
   canMove: 1
+  isDummy: 0
   hadLoadedPosition: 0
   respawnCharacter: 0
-  switchRightWeapon: 0
   playerLocomotionManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
@@ -2681,6 +2683,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed22f3b1c074184f90ef7841972eaf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: hit_Forward_Medium_01
+  hit_Forward_Medium_02: hit_Forward_Medium_02
+  hit_Backward_Medium_01: hit_Backward_Medium_01
+  hit_Backward_Medium_02: hit_Backward_Medium_02
+  hit_Left_Medium_01: hit_Left_Medium_01
+  hit_Left_Medium_02: hit_Left_Medium_02
+  hit_Right_Medium_01: hit_Right_Medium_01
+  hit_Right_Medium_02: hit_Right_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  left_Medium_Damage: []
+  right_Medium_Damage: []
 --- !u!114 &3011204550580616316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2707,6 +2722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfe1e10abd0986348ad02387d7ba9816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSpatterVFX: {fileID: 0}
   effectToTest: {fileID: 11400000, guid: 8f55f54823559e54d81c4d507d19ad29, type: 2}
   processEffect: 0
 --- !u!114 &839191568854633384
@@ -2722,6 +2738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentWeaponBeingUsed: {fileID: 0}
+  currentAttackType: 0
 --- !u!114 &-3530119882194057875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2742,9 +2759,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1510bf01d2167b24c95b8c4623292a0a, type: 2}
   rightHandWeaponIndex: 0
   weaponInLeftHandSlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 07ecb4d5ea0dac9478182e2fe61e3b9f, type: 2}
+  - {fileID: 11400000, guid: 1510bf01d2167b24c95b8c4623292a0a, type: 2}
+  - {fileID: 11400000, guid: 1510bf01d2167b24c95b8c4623292a0a, type: 2}
   leftHandWeaponIndex: 0
 --- !u!114 &-9191249281418935742
 MonoBehaviour:

@@ -8,6 +8,9 @@ public class WorldCharacterEffectsManager : MonoBehaviour
     [Header("Damage")]
     public TakeHealthDamage takeHealthDamageEffect;
 
+    [Header("VFX")]
+    public GameObject bloodSpatterVFX;
+
     [SerializeField] List<InstantCharacterEffect> instantEffects;
     private void Awake()
     {

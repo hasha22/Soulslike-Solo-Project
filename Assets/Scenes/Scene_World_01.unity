@@ -4317,6 +4317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGameAsClient: 0
   playerUIHUDManager: {fileID: 0}
+  playerUIPopUpManager: {fileID: 0}
   clientCharacterData:
     characterName: Character
     secondsPlayer: 0
@@ -4781,6 +4782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492d3fec61ae40e49a41c6ec0ebf130f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
   physicalDamage: 0
   magicDamage: 0
   holyDamage: 0

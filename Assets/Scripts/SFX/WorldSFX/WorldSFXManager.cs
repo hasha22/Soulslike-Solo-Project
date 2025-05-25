@@ -10,6 +10,9 @@ public class WorldSFXManager : MonoBehaviour
     [SerializeField] public AudioClip[] walkingClips;
     [SerializeField] public AudioClip[] backstepClips;
 
+    [Header("Damage Sounds")]
+    [SerializeField] public AudioClip[] physicalDamageSFX;
+
     //[Header("Character Action Sounds")]
 
     private void Awake()
@@ -26,5 +29,10 @@ public class WorldSFXManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+    }
+    public AudioClip ChooseRandomSFX(AudioClip[] array)
+    {
+        int index = Random.Range(0, array.Length);
+        return array[index];
     }
 }

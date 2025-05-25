@@ -25,6 +25,8 @@ public class DamageCollider : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
+        if (other is CapsuleCollider && other.GetComponent<CharacterController>() != null)
+            return;
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
         if (damageTarget != null)
         {
@@ -36,8 +38,7 @@ public class DamageCollider : MonoBehaviour
     {
         if (charactersDamaged.Contains(damageTarget))
             return;
-
-        //charactersDamaged.Add(damageTarget);
+        charactersDamaged.Add(damageTarget);
 
         TakeHealthDamage damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
         damageEffect.physicalDamage = physicalDamage;
@@ -49,7 +50,6 @@ public class DamageCollider : MonoBehaviour
 
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
     }
-
     public virtual void EnableDamageCollider()
     {
         damageCollider.enabled = true;

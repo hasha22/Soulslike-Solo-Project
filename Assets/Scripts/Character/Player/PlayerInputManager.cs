@@ -24,7 +24,9 @@ public class PlayerInputManager : MonoBehaviour
     public bool isSprinting = false;
     public bool isWalking = false;
     public bool isJumping = false;
-    public bool LeftClickInput = false;
+    public bool leftClickInput = false;
+    public bool switchRightWeapon = false;
+    public bool switchLeftWeapon = false;
 
     private void Awake()
     {
@@ -87,7 +89,10 @@ public class PlayerInputManager : MonoBehaviour
 
             inputControls.PlayerActions.Jump.performed += i => isJumping = true;
 
-            inputControls.PlayerActions.LeftClick.performed += i => LeftClickInput = true;
+            inputControls.PlayerActions.LeftClick.performed += i => leftClickInput = true;
+
+            inputControls.PlayerActions.SwitchRightWeapon.performed += i => switchRightWeapon = true;
+            inputControls.PlayerActions.SwitchLeftWeapon.performed += i => switchLeftWeapon = true;
 
             inputControls.Enable();
         }
@@ -119,6 +124,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintingInput();
         HandleJumpingInput();
         HandleLeftClickInput();
+        HandleSwitchRightWeaponInput();
+        HandleSwitchLeftWeaponInput();
     }
     private void HandleMovementInput()
     {
@@ -180,12 +187,28 @@ public class PlayerInputManager : MonoBehaviour
     }
     private void HandleLeftClickInput()
     {
-        if (LeftClickInput && player != null)
+        if (leftClickInput && player != null)
         {
-            LeftClickInput = false;
+            leftClickInput = false;
 
             player.playerNetworkManager.SetCharacterActionHand(true);
             player.playerCombatManager.PerformWeaponBasedAction(player.playerInventoryManager.currentRightHandWeapon.LeftClickAction, player.playerInventoryManager.currentRightHandWeapon);
+        }
+    }
+    private void HandleSwitchRightWeaponInput()
+    {
+        if (switchRightWeapon)
+        {
+            switchRightWeapon = false;
+            player.playerEquipmentManager.SwitchRightWeapon();
+        }
+    }
+    private void HandleSwitchLeftWeaponInput()
+    {
+        if (switchLeftWeapon)
+        {
+            switchLeftWeapon = false;
+            player.playerEquipmentManager.SwitchLeftWeapon();
         }
     }
 }

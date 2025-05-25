@@ -1,5 +1,6 @@
 using UnityEngine;
-
+#if UNITY_EDITOR
+#endif
 public class CharacterLocomotionManager : MonoBehaviour
 {
     CharacterManager character;
@@ -49,9 +50,10 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
     }
-
+#if !UNITY_EDITOR
     protected void OnDrawGizmosSelected()
     {
         Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
     }
+#endif
 }

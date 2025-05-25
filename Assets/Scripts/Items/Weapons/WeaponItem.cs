@@ -29,6 +29,4 @@ public class WeaponItem : Item
 
     [Header("Actions")]
     public WeaponItemAction LeftClickAction;
-
-
 }

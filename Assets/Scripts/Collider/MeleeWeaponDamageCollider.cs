@@ -20,13 +20,17 @@ public class MeleeWeaponDamageCollider : DamageCollider
     }
     protected override void OnTriggerEnter(Collider other)
     {
+        if (other is CapsuleCollider && other.GetComponent<CharacterController>() != null)
+            return;
+
         CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
         if (damageTarget != null)
         {
             if (damageTarget == characterCausingDamage)
                 return;
-            contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
+            contactPoint = other.ClosestPoint(transform.position);
             DamageTarget(damageTarget);
         }
     }
@@ -35,8 +39,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
         if (charactersDamaged.Contains(damageTarget))
             return;
 
-        //charactersDamaged.Add(damageTarget);
-
+        charactersDamaged.Add(damageTarget);
         TakeHealthDamage damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
         damageEffect.physicalDamage = physicalDamage;
         damageEffect.magicDamage = magicDamage;
@@ -44,6 +47,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
         damageEffect.lightningDamage = lightningDamage;
         damageEffect.fireDamage = fireDamage;
         damageEffect.contactPoint = contactPoint;
+        damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up);
 
         switch (characterCausingDamage.characterCombatManager.currentAttackType)
         {

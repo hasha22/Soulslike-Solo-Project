@@ -43,7 +43,6 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
         LoadRightWeapon();
         LoadLeftWeapon();
     }
-
     public void LoadRightWeapon()
     {
         WeaponItem weaponItem = player.playerInventoryManager.currentRightHandWeapon;

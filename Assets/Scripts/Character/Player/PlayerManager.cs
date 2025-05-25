@@ -1,12 +1,14 @@
 using SaveGameManager;
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
-    [SerializeField] bool switchRightWeapon = false;
+    //[SerializeField] bool spawnDummy = false;
+    //[SerializeField] GameObject dummyPlayerPrefab;
 
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -15,8 +17,6 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerInventoryManager playerInventoryManager;
     [HideInInspector] public PlayerEquipmentManager playerEquipmentManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
-
-    private Vector3 lastPosition;
 
     protected override void Awake()
     {
@@ -48,7 +48,7 @@ public class PlayerManager : CharacterManager
         base.OnNetworkSpawn();
         if (!IsOwner)
             return;
-
+        //NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         PlayerCamera.instance.player = this;
         PlayerInputManager.instance.player = this;
         WorldSaveGameManager.instance.player = this;
@@ -71,6 +71,8 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.currentWeaponBeingUsed.OnValueChanged += playerNetworkManager.OnCurrentWeaponBeingUsedIDChange;
 
         //if joining game after instantiating weapon, load weapon model
+        // doesn't work
+        /*
         if (IsOwner && !IsServer && playerNetworkManager.currentRightHandWeaponID.Value != 0)
         {
             int weaponID = player.playerNetworkManager.currentRightHandWeaponID.Value;
@@ -78,12 +80,54 @@ public class PlayerManager : CharacterManager
             player.playerInventoryManager.currentRightHandWeapon = newWeapon;
             player.playerEquipmentManager.LoadRightWeapon();
         }
+        */
         //if connecting as client
         if (IsOwner && !IsServer)
         {
-            Debug.Log("Loading client data...");
             LoadPlayerData(ref PlayerUIManager.instance.clientCharacterData);
         }
+
+    }
+    private void OnClientConnectedCallback(ulong clientID)
+    {
+        /*
+        WorldGameSessionManager.instance.AddPlayer(this);
+        if (IsServer)
+        {
+            // Find the newly connected client's PlayerManager
+            PlayerManager newPlayer = null;
+            foreach (var player in WorldGameSessionManager.instance.players)
+            {
+                if (player.OwnerClientId == clientID)
+                {
+                    newPlayer = player;
+                    break;
+                }
+            }
+
+            if (newPlayer != null)
+            {
+                // Sync existing players' weapons to the new client
+                foreach (var existingPlayer in WorldGameSessionManager.instance.players)
+                {
+                    if (existingPlayer != newPlayer)
+                    {
+                        existingPlayer.SyncWeaponsToClientClientRpc(clientID);
+                    }
+                }
+            }
+        }
+ 
+        if (!IsServer && IsOwner)
+        {
+        foreach (var player in WorldGameSessionManager.instance.players)
+        {
+            if (player != this)
+            {
+                Debug.Log("Reloading weapons...");
+                player.LoadPlayerWhenJoining();
+            }
+        }*/
 
     }
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation)
@@ -204,6 +248,12 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.endurance.Value = currentCharacterData.endurance;
         playerNetworkManager.mind.Value = currentCharacterData.mind;
     }
+    public void LoadPlayerWhenJoining()
+    {
+        //Sync weapons
+        playerNetworkManager.OnCurrentRightHandWeaponIDChange(0, playerNetworkManager.currentRightHandWeaponID.Value);
+        playerNetworkManager.OnCurrentLeftHandWeaponIDChange(0, playerNetworkManager.currentLeftHandWeaponID.Value);
+    }
     public override void ReviveCharacter()
     {
         base.ReviveCharacter();
@@ -224,10 +274,30 @@ public class PlayerManager : CharacterManager
             respawnCharacter = false;
             ReviveCharacter();
         }
-        if (switchRightWeapon)
+        /*
+        if (spawnDummy)
         {
-            switchRightWeapon = false;
-            playerEquipmentManager.SwitchRightWeapon();
+            spawnDummy = false;
+            SpawnTestDummy();
+        }
+        */
+    }
+    /*
+    private void SpawnTestDummy()
+    {
+        var dummy = Instantiate(dummyPlayerPrefab, new Vector3(5, 0, 5), Quaternion.identity);
+        var netObj = dummy.GetComponent<NetworkObject>();
+        netObj.Spawn(false); // No ownership
+        dummy.GetComponent<PlayerManager>().isDummy = true;
+    }
+    */
+    // doesn't work
+    [ClientRpc]
+    private void SyncWeaponsToClientClientRpc(ulong targetClientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == targetClientId)
+        {
+            LoadPlayerWhenJoining();
         }
     }
 }

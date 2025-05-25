@@ -1,12 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class PlayerUIHUDManager : MonoBehaviour
 {
+    [Header("Stat Bars")]
     [SerializeField] UI_StatBar healthBar;
     [SerializeField] UI_StatBar staminaBar;
     [SerializeField] UI_StatBar focusPointsBar;
 
+    [Header("Quick Slots")]
+    [SerializeField] Image rightWeaponQuickSlotIcon;
+    [SerializeField] Image leftWeaponQuickSlotIcon;
+    [SerializeField] Image magicQuickSlotIcon;
+    [SerializeField] Image itemSlotIcon;
     public void SetNewStaminaValue(float oldValue, float newValue)
     {
         staminaBar.SetStat(Mathf.RoundToInt(newValue));
@@ -30,5 +37,49 @@ public class PlayerUIHUDManager : MonoBehaviour
     public void SetMaxFPValue(int maxFocusPoints, float currentFocusPoints)
     {
         focusPointsBar.SetMaxStat(maxFocusPoints, currentFocusPoints);
+    }
+    public void SetRightWeaponQuickSlotIcon(int weaponID)
+    {
+        WeaponItem weaponItem = WorldItemDatabase.instance.GetWeaponByID(weaponID);
+        if (weaponItem == null)
+        {
+            Debug.Log("ITEM IS NULL");
+            rightWeaponQuickSlotIcon.enabled = false;
+            rightWeaponQuickSlotIcon.sprite = null;
+            return;
+        }
+
+        if (weaponItem.itemIcon == null)
+        {
+            Debug.Log("NO ICON!");
+            rightWeaponQuickSlotIcon.enabled = false;
+            rightWeaponQuickSlotIcon.sprite = null;
+            return;
+        }
+
+        rightWeaponQuickSlotIcon.sprite = weaponItem.itemIcon;
+        rightWeaponQuickSlotIcon.enabled = true;
+    }
+    public void SetLeftWeaponQuickSlotIcon(int weaponID)
+    {
+        WeaponItem weaponItem = WorldItemDatabase.instance.GetWeaponByID(weaponID);
+        if (weaponItem == null)
+        {
+            Debug.Log("ITEM IS NULL");
+            leftWeaponQuickSlotIcon.enabled = false;
+            leftWeaponQuickSlotIcon.sprite = null;
+            return;
+        }
+
+        if (weaponItem.itemIcon == null)
+        {
+            Debug.Log("NO ICON!");
+            leftWeaponQuickSlotIcon.enabled = false;
+            leftWeaponQuickSlotIcon.sprite = null;
+            return;
+        }
+
+        leftWeaponQuickSlotIcon.sprite = weaponItem.itemIcon;
+        leftWeaponQuickSlotIcon.enabled = true;
     }
 }
