@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03de0634c011e0147ba864f7149fd591, type: 3}
-  m_Name: Light Attack Action
+  m_Script: {fileID: 11500000, guid: 93bb8c1f18ae90a47953182727f08054, type: 3}
+  m_Name: Idle State
   m_EditorClassIdentifier: 
-  actionID: 0
-  light_Attack_01: Light_Attack_01
-  light_Attack_02: Light_Attack_02

@@ -98,10 +98,19 @@ public class CharacterAnimatorManager : MonoBehaviour
         //Stop character from performing an additional action 
         character.isPerformingAction = isPerformingAction;
         character.characterCombatManager.currentAttackType = attackType;
+        character.characterCombatManager.lastAttackAnimation = targetAnimation;
         character.canRotate = false;
         character.canMove = false;
 
 
         character.characterNetworkManager.NotifyServerOfAttackAnimationServerRpc(NetworkManager.Singleton.LocalClientId, targetAnimation);
+    }
+    public virtual void EnableCombo()
+    {
+
+    }
+    public virtual void DisableCombo()
+    {
+
     }
 }

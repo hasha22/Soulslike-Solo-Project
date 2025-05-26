@@ -24,8 +24,14 @@ public enum WeaponModelSlot
     RightHand,
     LeftHand,
 }
+public enum CharacterGroup
+{
+    Friendly,
+    Enemy
+}
 public enum AttackType
 {
-    LightAttack01
+    LightAttack01,
+    LightAttack02
 }
 

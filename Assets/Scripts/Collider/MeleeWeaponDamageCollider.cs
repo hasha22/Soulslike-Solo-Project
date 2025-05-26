@@ -7,6 +7,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
     [Header("Weapon Attack Modifier")]
     public float lightAttack01Modifier;
+    public float lightAttack02Modifier;
 
     protected override void Awake()
     {
@@ -53,6 +54,9 @@ public class MeleeWeaponDamageCollider : DamageCollider
         {
             case AttackType.LightAttack01:
                 ApplyAttackDamageModifier(lightAttack01Modifier, damageEffect);
+                break;
+            case AttackType.LightAttack02:
+                ApplyAttackDamageModifier(lightAttack02Modifier, damageEffect);
                 break;
             default:
                 break;

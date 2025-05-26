@@ -99,7 +99,8 @@ GameObject:
   - component: {fileID: 6575392970356764191}
   - component: {fileID: 4433073331170503148}
   - component: {fileID: 1361505394823946766}
-  - component: {fileID: 3020283977402204955}
+  - component: {fileID: 4239033116431358972}
+  - component: {fileID: 2700153641500499444}
   - component: {fileID: 4849505230534455077}
   - component: {fileID: -3362526368709461086}
   - component: {fileID: 4780540406520361825}
@@ -113,7 +114,7 @@ GameObject:
   - component: {fileID: 397870536321302948}
   - component: {fileID: 7350521092532817249}
   m_Layer: 6
-  m_Name: Dummy
+  m_Name: Dummy_01
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 142400480509191314}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.84933865, y: -0.00000023841858, z: -8.082344}
+  m_LocalPosition: {x: -0.2607746, y: 0.00000047683716, z: -4.9900103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -249,7 +250,7 @@ MonoBehaviour:
     m_InternalValue: 15
   mind:
     m_InternalValue: 8
---- !u!114 &3020283977402204955
+--- !u!114 &4239033116431358972
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,7 +259,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 142400480509191314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7451852b6130aa4e93bb547aa8f5373, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fa3ec63b2906d049b96e1e7af3918bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
@@ -272,11 +273,36 @@ MonoBehaviour:
   characterAnimatorManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterSFX: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
+  characterGroup: 1
   isPerformingAction: 0
   isGrounded: 1
   canRotate: 1
   canMove: 1
   hadLoadedPosition: 0
+  currentState: {fileID: 11400000, guid: 1da6799dfe5adbb4a89bba25e1ff03cc, type: 2}
+  aiCharacterCombatManager: {fileID: 0}
+--- !u!114 &2700153641500499444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142400480509191314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a35438e6af5a744f842fa8cec743d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimation: 
+  currentTarget: {fileID: 0}
+  lockOnTransform: {fileID: 2210660193594717683}
+  currentWeaponBeingUsed: {fileID: 0}
+  currentAttackType: 0
+  detectionRadius: 15
+  minimumDetectionAngle: -35
+  maximumDetectionAngle: 35
 --- !u!114 &4849505230534455077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +323,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
+  isRolling: 0
 --- !u!114 &-3362526368709461086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  lastAttackAnimation: 
   currentTarget: {fileID: 0}
   lockOnTransform: {fileID: 2210660193594717683}
   currentWeaponBeingUsed: {fileID: 0}

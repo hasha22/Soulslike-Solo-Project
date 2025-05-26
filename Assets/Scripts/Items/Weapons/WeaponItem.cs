@@ -20,7 +20,8 @@ public class WeaponItem : Item
     public float poiseDamage = 0;
 
     [Header("Attack Modifiers")]
-    public float lightAttack01Modifier = 1.1f;
+    public float lightAttack01Modifier = 1.0f;
+    public float lightAttack02Modifier = 1.2f;
 
     [Header("Stamina Cost Modifiers")]
     //running attack, jumping attack, sneak attack etc.
