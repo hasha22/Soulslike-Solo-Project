@@ -87,7 +87,8 @@ public class CharacterNetworkManager : NetworkBehaviour
     }
     public void OnIsMovingChanged(bool oldValue, bool newValue)
     {
-        character.animator.SetBool("IsMoving", isMoving.Value);
+        //Debug.Log(isMoving.Value);
+        character.animator.SetBool("isMoving", newValue);
     }
     //Regular Animations
     [ServerRpc]

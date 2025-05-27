@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Skeleton
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - Water
   - UI
   - Character
-  - ' Damageable Character'
-  - 
+  - Damageable Character
+  - Enemy
   - 
   - ' Damage Collider'
   - 

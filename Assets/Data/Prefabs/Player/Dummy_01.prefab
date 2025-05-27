@@ -289,6 +289,7 @@ MonoBehaviour:
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterNetworkManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
+  aiCharacterAnimatorManager: {fileID: 0}
 --- !u!114 &2700153641500499444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,7 +434,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fdb4f90bd933b9445872b48243bc9362, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

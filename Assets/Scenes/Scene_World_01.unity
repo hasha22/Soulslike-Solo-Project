@@ -29337,7 +29337,7 @@ PrefabInstance:
     - target: {fileID: 5995721457694519264, guid: 72d6081ca15103a4db82bb6a77598c87, type: 3}
       propertyPath: 'AICharacters.Array.data[1]'
       value: 
-      objectReference: {fileID: 142400480509191314, guid: 022c9abc2d6a8f7459deaed5e33c7b80, type: 3}
+      objectReference: {fileID: 142400480509191314, guid: 54afb912b2c956746a07621e5695d773, type: 3}
     - target: {fileID: 5995721457694519264, guid: 72d6081ca15103a4db82bb6a77598c87, type: 3}
       propertyPath: 'AICharacters.Array.data[2]'
       value: 
