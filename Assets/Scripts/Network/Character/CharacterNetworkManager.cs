@@ -27,6 +27,7 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<ulong> currentTargetNetworkObjectID = new NetworkVariable<ulong>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Animator")]
+    public NetworkVariable<bool> isMoving = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> verticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> horizontalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> moveAmount = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -83,6 +84,10 @@ public class CharacterNetworkManager : NetworkBehaviour
         {
             character.characterCombatManager.currentTarget = null;
         }
+    }
+    public void OnIsMovingChanged(bool oldValue, bool newValue)
+    {
+        character.animator.SetBool("isMoving", isMoving.Value);
     }
     //Regular Animations
     [ServerRpc]

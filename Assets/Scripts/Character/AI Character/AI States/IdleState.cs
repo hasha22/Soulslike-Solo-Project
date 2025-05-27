@@ -6,13 +6,11 @@ public class IdleState : AIState
     {
         if (aiCharacter.aiCharacterCombatManager.currentTarget != null)
         {
-            Debug.Log("Found target");
-            return this;
+            return SwitchState(aiCharacter, aiCharacter.pursueTarget);
         }
         else
         {
             aiCharacter.aiCharacterCombatManager.FindTargetViaLineOfSight(aiCharacter);
-            Debug.Log("Searching for target");
             return this;
         }
     }

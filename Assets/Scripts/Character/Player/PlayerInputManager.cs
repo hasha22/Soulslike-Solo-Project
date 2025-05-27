@@ -152,9 +152,8 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
         if (player == null)
-        {
             return;
-        }
+
         //not locked on, therefore no strafing 
         if (!player.playerNetworkManager.isLockedOn.Value || player.playerNetworkManager.isSprinting.Value)
         {
