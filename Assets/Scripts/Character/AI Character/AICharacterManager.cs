@@ -33,8 +33,12 @@ public class AICharacterManager : CharacterManager
         // To avoid errors, don't get why it does this. 
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        characterNetworkManager = GetComponent<CharacterNetworkManager>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
+        characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        characterCombatManager = GetComponent<CharacterCombatManager>();
         characterSFX = GetComponent<CharacterSFX>();
+        characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
     protected override void FixedUpdate()
     {

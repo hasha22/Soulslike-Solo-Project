@@ -24,11 +24,13 @@ public class PursueTargetState : AIState
         aiCharacter.navMeshAgent.SetPath(path);
 
         // Updating movement parameters
+        /*
         Vector3 agentVelocity = aiCharacter.navMeshAgent.velocity;
         float speed = agentVelocity.magnitude;
         float maxAgentSpeed = aiCharacter.navMeshAgent.speed;
         float normalizedSpeed = speed / maxAgentSpeed;
         aiCharacter.aiCharacterAnimatorManager.UpdateAnimatorMovementParameters(0f, normalizedSpeed);
+        */
         return this;
     }
 }

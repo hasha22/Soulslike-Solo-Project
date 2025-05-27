@@ -19,7 +19,7 @@ public class PlayerUIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
             playerUIHUDManager = GetComponentInChildren<PlayerUIHUDManager>();
             playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
         }
