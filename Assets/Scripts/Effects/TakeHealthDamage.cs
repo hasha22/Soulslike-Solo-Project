@@ -56,11 +56,26 @@ public class TakeHealthDamage : InstantCharacterEffect
     }
     private void PlayDamageVFX(CharacterManager character)
     {
-        character.characterEffectsManager.PlayBloodSpatterVFX(contactPoint);
+        if (character.tag == "Skeleton")
+        {
+            character.characterEffectsManager.PlayBoneShatterVFX(contactPoint);
+        }
+        else if (character.tag == "Player")
+        {
+            character.characterEffectsManager.PlayBloodSpatterVFX(contactPoint);
+        }
     }
     private void PlayDamageSFX(CharacterManager character)
     {
-        AudioClip physicalDamageSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.physicalDamageSFX);
+        AudioClip physicalDamageSFX = null;
+        if (character.tag == "Skeleton")
+        {
+            physicalDamageSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.boneShatterSFX);
+        }
+        else if (character.tag == "Player")
+        {
+            physicalDamageSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.bloodSpillSFX);
+        }
 
         character.characterSFX.PlaySoundFX(physicalDamageSFX);
     }

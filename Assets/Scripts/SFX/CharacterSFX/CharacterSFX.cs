@@ -18,8 +18,16 @@ public class CharacterSFX : MonoBehaviour
     {
         if (!character.isPerformingAction)
         {
-            int index = Random.Range(0, WorldSFXManager.instance.footstepClips.Length);
-            audioSource.PlayOneShot(WorldSFXManager.instance.footstepClips[index]);
+            if (character.tag == "Player")
+            {
+                int index = Random.Range(0, WorldSFXManager.instance.playerFootstepClips.Length);
+                audioSource.PlayOneShot(WorldSFXManager.instance.playerFootstepClips[index]);
+            }
+            else if (character.tag == "Skeleton")
+            {
+                int index = Random.Range(0, WorldSFXManager.instance.skeletonFootstepClips.Length);
+                audioSource.PlayOneShot(WorldSFXManager.instance.skeletonFootstepClips[index], 0.5f);
+            }
         }
     }
     public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)

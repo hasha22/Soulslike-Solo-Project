@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3548588485384254795}
   - component: {fileID: -9175019370724450434}
   m_Layer: 0
-  m_Name: Bone Chip
+  m_Name: Bone Shatter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

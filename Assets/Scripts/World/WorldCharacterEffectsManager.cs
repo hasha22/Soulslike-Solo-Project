@@ -10,6 +10,7 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 
     [Header("VFX")]
     public GameObject bloodSpatterVFX;
+    public GameObject boneShatterVFX;
 
     [SerializeField] List<InstantCharacterEffect> instantEffects;
     private void Awake()

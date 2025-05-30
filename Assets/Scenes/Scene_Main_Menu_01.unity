@@ -6467,6 +6467,10 @@ PrefabInstance:
       value: World Character Effects Manager
       objectReference: {fileID: 0}
     - target: {fileID: 1963314801261070527, guid: 1bd46f9fc470d3849907628843e4c0ea, type: 3}
+      propertyPath: boneShatterVFX
+      value: 
+      objectReference: {fileID: 3548588485384254792, guid: f1462c1459b35b244ad333d6dc42cdb5, type: 3}
+    - target: {fileID: 1963314801261070527, guid: 1bd46f9fc470d3849907628843e4c0ea, type: 3}
       propertyPath: bloodSpatterVFX
       value: 
       objectReference: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d, type: 3}
@@ -6891,8 +6895,44 @@ PrefabInstance:
       value: WorldSFXManager
       objectReference: {fileID: 0}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: bloodSpillSFX.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: boneShatterSFX.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'bloodSpillSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7cbd6cd765888ff418d01d98bd1ce9c2, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'bloodSpillSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'boneShatterSFX.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2eb4b0dadc50d1c4092ef5ac2bde2da0, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'boneShatterSFX.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b413a6e95987034b9d89470ca128585, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'boneShatterSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d074c7bbf9a442c459de7244b3a86026, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'boneShatterSFX.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 15f69fbb6022af845a36893aa4e7ef3f, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: physicalDamageSFX.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: playerFootstepClips.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: 'physicalDamageSFX.Array.data[0]'
@@ -6902,6 +6942,46 @@ PrefabInstance:
       propertyPath: 'physicalDamageSFX.Array.data[1]'
       value: 
       objectReference: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b413a6e95987034b9d89470ca128585, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'physicalDamageSFX.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9b413a6e95987034b9d89470ca128585, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: skeletonFootstepClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'playerFootstepClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 22b5b26c3429f42c482afafb562afc2a, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'playerFootstepClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a948133482bd9461cbcb85c1b36c59b7, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'playerFootstepClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8033517be0e2b4a939b3f8ffacc6f4d5, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'playerFootstepClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f65c4ff197551410b9f70b804410c961, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'skeletonFootstepClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 80f6dbe110564b04a9c18f1e9b08adb7, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'skeletonFootstepClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: df5e2efcbb6ec4c4b94463cf6d10f86c, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'skeletonFootstepClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d9537755e697b274e8edcdd24604f8d5, type: 3}
     m_RemovedComponents:
     - {fileID: 4459346127526707769, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
     m_RemovedGameObjects: []

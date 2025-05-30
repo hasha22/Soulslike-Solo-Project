@@ -12,6 +12,8 @@ public class AICharacterManager : CharacterManager
     [Header("States")]
     public IdleState idle;
     public PursueTargetState pursueTarget;
+    public CombatStanceState combatStance;
+    public AttackState attack;
 
     [HideInInspector] public AICharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterNetworkManager aiCharacterNetworkManager;
@@ -43,8 +45,13 @@ public class AICharacterManager : CharacterManager
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
-        ProcessStateMachine();
+        if (IsOwner)
+            ProcessStateMachine();
+    }
+    protected override void Update()
+    {
+        base.Update();
+        aiCharacterCombatManager.HandleActionRecovery(this);
     }
     private void ProcessStateMachine()
     {
@@ -56,6 +63,13 @@ public class AICharacterManager : CharacterManager
 
         navMeshAgent.transform.localPosition = Vector3.zero;
         navMeshAgent.transform.localRotation = Quaternion.identity;
+
+        if (aiCharacterCombatManager.currentTarget != null)
+        {
+            aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
+            aiCharacterCombatManager.viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
+            aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
+        }
 
         if (navMeshAgent.enabled)
         {

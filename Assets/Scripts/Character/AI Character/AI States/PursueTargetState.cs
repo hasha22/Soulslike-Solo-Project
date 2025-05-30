@@ -11,12 +11,23 @@ public class PursueTargetState : AIState
         // Switches to idle state if target is null
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
             return SwitchState(aiCharacter, aiCharacter.idle);
+        // Switches to combat stance if target is close enough
+        if (aiCharacter.aiCharacterCombatManager.distanceFromTarget < aiCharacter.aiCharacterCombatManager.maximumEngagementDistance)
+            return SwitchState(aiCharacter, aiCharacter.combatStance);
         // Enables NavMeshAgent
         if (!aiCharacter.navMeshAgent.enabled)
             aiCharacter.navMeshAgent.enabled = true;
 
+        /*
+        if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumFOV ||
+            aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumFOV)
+        {
+            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+        }
+        */
+
         // Rotating towards player
-        aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
+        aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
         // Setting path
         NavMeshPath path = new NavMeshPath();
@@ -24,7 +35,6 @@ public class PursueTargetState : AIState
         aiCharacter.navMeshAgent.SetPath(path);
 
         // Updating movement parameters
-
         Vector3 agentVelocity = aiCharacter.navMeshAgent.velocity;
         float speed = agentVelocity.magnitude;
         float maxAgentSpeed = aiCharacter.navMeshAgent.speed;

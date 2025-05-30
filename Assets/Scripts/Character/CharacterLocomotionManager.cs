@@ -48,6 +48,14 @@ public class CharacterLocomotionManager : MonoBehaviour
         character.characterController.Move(yVelocity * Time.deltaTime);
 
     }
+    public void EnableCanRotate()
+    {
+        character.canRotate = true;
+    }
+    public void DisableCanRotate()
+    {
+        character.canRotate = false;
+    }
     protected void HandleGroundCheck()
     {
         character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);

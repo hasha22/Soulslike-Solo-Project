@@ -6,12 +6,16 @@ public class WorldSFXManager : MonoBehaviour
 
     [Header("Player Action Sounds")]
     [SerializeField] public AudioClip rollingSFX;
-    [SerializeField] public AudioClip[] footstepClips;
+    [SerializeField] public AudioClip[] playerFootstepClips;
     [SerializeField] public AudioClip[] walkingClips;
     [SerializeField] public AudioClip[] backstepClips;
 
+    [Header("Enemy Action Sounds")]
+    [SerializeField] public AudioClip[] skeletonFootstepClips;
+
     [Header("Damage Sounds")]
-    [SerializeField] public AudioClip[] physicalDamageSFX;
+    [SerializeField] public AudioClip[] bloodSpillSFX;
+    [SerializeField] public AudioClip[] boneShatterSFX;
 
     //[Header("Character Action Sounds")]
 
@@ -20,15 +24,12 @@ public class WorldSFXManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-    }
-    private void Start()
-    {
-        DontDestroyOnLoad(gameObject);
     }
     public AudioClip ChooseRandomSFX(AudioClip[] array)
     {
