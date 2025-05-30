@@ -60,7 +60,6 @@ public class AICharacterManager : CharacterManager
         {
             currentState = nextState;
         }
-
         navMeshAgent.transform.localPosition = Vector3.zero;
         navMeshAgent.transform.localRotation = Quaternion.identity;
 

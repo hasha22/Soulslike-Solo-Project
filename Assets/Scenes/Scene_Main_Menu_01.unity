@@ -6899,8 +6899,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: swordWhooshes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: boneShatterSFX.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: takeDamageClips.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: 'bloodSpillSFX.Array.data[0]'
@@ -6910,6 +6918,14 @@ PrefabInstance:
       propertyPath: 'bloodSpillSFX.Array.data[1]'
       value: 
       objectReference: {fileID: 8300000, guid: 3df9bbbc130ccb344af5f3fc793a630f, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'swordWhooshes.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 33ccde98691f4294b9bda838444cdfa8, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'swordWhooshes.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 920af3efd3898824497abfff706901ac, type: 3}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: 'boneShatterSFX.Array.data[0]'
       value: 
@@ -6930,6 +6946,30 @@ PrefabInstance:
       propertyPath: physicalDamageSFX.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 94696be6076931f4dbdb2e5a1d3b6bd8, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ec7aa9e8e6cc5ff408ac0bc176329ed8, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d689d786c92e05c4ea25909dc565ac79, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d689d786c92e05c4ea25909dc565ac79, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[4]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d689d786c92e05c4ea25909dc565ac79, type: 3}
+    - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
+      propertyPath: 'takeDamageClips.Array.data[5]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9683c540961189e44a291c82a10b41b7, type: 3}
     - target: {fileID: 8387047974688198577, guid: c889aea730b7f264fb437174ae99ae9d, type: 3}
       propertyPath: playerFootstepClips.Array.size
       value: 4

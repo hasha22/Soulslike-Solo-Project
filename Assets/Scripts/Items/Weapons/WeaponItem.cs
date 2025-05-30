@@ -30,4 +30,7 @@ public class WeaponItem : Item
 
     [Header("Actions")]
     public WeaponItemAction LeftClickAction;
+
+    [Header("Equip Weapon SFX")]
+    public AudioClip[] equipWeaponSFX;
 }

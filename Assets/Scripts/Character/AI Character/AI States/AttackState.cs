@@ -18,6 +18,7 @@ public class AttackState : AIState
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null || !aiCharacter.aiCharacterCombatManager.currentTarget.isAlive.Value)
             return SwitchState(aiCharacter, aiCharacter.idle);
 
+        aiCharacter.aiCharacterCombatManager.RotateTowardsTargetWhilstAttacking(aiCharacter);
         aiCharacter.aiCharacterAnimatorManager.UpdateAnimatorMovementParameters(0, 0);
 
         if (willPerformCombo && !hasPerformedCombo)
@@ -28,11 +29,11 @@ public class AttackState : AIState
                 //currentAttack.comboAction.AttemptToPerformAction(aiCharacter);
             }
         }
+        if (aiCharacter.isPerformingAction)
+            return this;
         if (!hasPerformedAttack)
         {
             if (aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0)
-                return this;
-            if (aiCharacter.isPerformingAction)
                 return this;
             PerformAttack(aiCharacter);
             return this;

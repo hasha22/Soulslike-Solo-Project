@@ -9,6 +9,7 @@ public class WorldSFXManager : MonoBehaviour
     [SerializeField] public AudioClip[] playerFootstepClips;
     [SerializeField] public AudioClip[] walkingClips;
     [SerializeField] public AudioClip[] backstepClips;
+    [SerializeField] public AudioClip[] takeDamageClips;
 
     [Header("Enemy Action Sounds")]
     [SerializeField] public AudioClip[] skeletonFootstepClips;
@@ -17,7 +18,8 @@ public class WorldSFXManager : MonoBehaviour
     [SerializeField] public AudioClip[] bloodSpillSFX;
     [SerializeField] public AudioClip[] boneShatterSFX;
 
-    //[Header("Character Action Sounds")]
+    [Header("Weapon Whooshes")]
+    [SerializeField] public AudioClip[] swordWhooshes;
 
     private void Awake()
     {

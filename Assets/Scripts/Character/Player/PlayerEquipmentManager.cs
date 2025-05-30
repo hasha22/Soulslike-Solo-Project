@@ -61,6 +61,8 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
     {
         if (!player.IsOwner)
             return;
+        if (!player.isAlive.Value)
+            return;
 
         player.playerAnimationManager.PlayActionAnimation("Swap_Right_Weapon_01", false);
 
@@ -93,6 +95,11 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
                 // Equip weapon and send id to network
                 player.playerInventoryManager.rightHandWeaponIndex = firstWeaponPosition;
                 WeaponItem selectedWeapon = player.playerInventoryManager.weaponInRightHandSlots[firstWeaponPosition];
+                AudioClip equipWeaponSFX = WorldSFXManager.instance.ChooseRandomSFX(selectedWeapon.equipWeaponSFX);
+                if (player.playerInventoryManager.currentRightHandWeapon.itemID == WorldItemDatabase.instance.unarmedWeapon.itemID)
+                {
+                    player.characterSFX.PlaySoundFX(equipWeaponSFX);
+                }
                 player.playerNetworkManager.EquipWeaponServerRpc(selectedWeapon.itemID);
             }
             return;
@@ -128,7 +135,8 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
     {
         if (!player.IsOwner)
             return;
-
+        if (!player.isAlive.Value)
+            return;
         player.playerAnimationManager.PlayActionAnimation("Swap_Left_Weapon_01", false);
 
         player.playerInventoryManager.leftHandWeaponIndex++;
@@ -160,6 +168,11 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
                 // Equip weapon and send id to network
                 player.playerInventoryManager.leftHandWeaponIndex = firstWeaponPosition;
                 WeaponItem selectedWeapon = player.playerInventoryManager.weaponInLeftHandSlots[firstWeaponPosition];
+                AudioClip equipWeaponSFX = WorldSFXManager.instance.ChooseRandomSFX(selectedWeapon.equipWeaponSFX);
+                if (player.playerInventoryManager.currentLeftHandWeapon.itemID == WorldItemDatabase.instance.unarmedWeapon.itemID)
+                {
+                    player.characterSFX.PlaySoundFX(equipWeaponSFX);
+                }
                 player.playerNetworkManager.currentLeftHandWeaponID.Value = selectedWeapon.itemID;
             }
             return;

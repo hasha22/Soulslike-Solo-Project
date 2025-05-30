@@ -32,13 +32,18 @@ public class CharacterSFX : MonoBehaviour
     }
     public void PlaySoundFX(AudioClip soundFX, float volume = 1, bool randomizePitch = true, float pitchRandom = 0.1f)
     {
-        audioSource.PlayOneShot(soundFX, volume);
         audioSource.pitch = 1;
-
+        audioSource.spatialBlend = 0f;
         if (randomizePitch)
         {
             audioSource.pitch += Random.Range(-pitchRandom, pitchRandom);
         }
+        audioSource.PlayOneShot(soundFX, volume);
+    }
+    public void PlayWhooshSoundFX(int index)
+    {
+        AudioClip whooshToPlay = WorldSFXManager.instance.swordWhooshes[index];
+        audioSource.PlayOneShot(whooshToPlay, 0.5f);
     }
     public void PlayWalkSFX()
     {

@@ -67,17 +67,20 @@ public class TakeHealthDamage : InstantCharacterEffect
     }
     private void PlayDamageSFX(CharacterManager character)
     {
-        AudioClip physicalDamageSFX = null;
+        AudioClip bodyHitSFX = null;
+        AudioClip playerHitSFX = null;
         if (character.tag == "Skeleton")
         {
-            physicalDamageSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.boneShatterSFX);
+            bodyHitSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.boneShatterSFX);
         }
         else if (character.tag == "Player")
         {
-            physicalDamageSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.bloodSpillSFX);
+            bodyHitSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.bloodSpillSFX);
+            playerHitSFX = WorldSFXManager.instance.ChooseRandomSFX(WorldSFXManager.instance.takeDamageClips);
+            character.characterSFX.PlaySoundFX(playerHitSFX, 0.1f);
         }
 
-        character.characterSFX.PlaySoundFX(physicalDamageSFX);
+        character.characterSFX.PlaySoundFX(bodyHitSFX);
     }
     private void PlayDirectionalBasedDamageAnimation(CharacterManager character)
     {

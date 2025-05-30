@@ -29,6 +29,11 @@ MonoBehaviour:
   lightningDamage: 0
   poiseDamage: 0
   lightAttack01Modifier: 1
+  lightAttack02Modifier: 1.2
   baseStaminaCost: 20
   lightAttackStaminaCostMultiplier: 1
   LeftClickAction: {fileID: 11400000, guid: 7a8f7d4d43b60ee4da31bb909fbc0a66, type: 2}
+  equipWeaponSFX:
+  - {fileID: 8300000, guid: 784956db0a99f4b47bb6a5e35efeb089, type: 3}
+  - {fileID: 8300000, guid: 78a5f913497be7d4e808113995f81a6c, type: 3}
+  - {fileID: 8300000, guid: 684f78a0a99ae8c42a02355c59a10800, type: 3}
