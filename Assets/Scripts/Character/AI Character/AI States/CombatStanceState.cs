@@ -29,15 +29,6 @@ public class CombatStanceState : AIState
             return SwitchState(aiCharacter, aiCharacter.idle);
         if (aiCharacter.aiCharacterCombatManager.distanceFromTarget > aiCharacter.aiCharacterCombatManager.maximumEngagementDistance)
             return SwitchState(aiCharacter, aiCharacter.pursueTarget);
-        /*
-        if (!aiCharacter.aiCharacterNetworkManager.isMoving.Value)
-        {
-            if (aiCharacter.aiCharacterCombatManager.viewableAngle <= 30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30)
-            {
-                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
-            }
-        }
-        */
 
         aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 

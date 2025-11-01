@@ -140,10 +140,6 @@ public class PlayerCamera : MonoBehaviour
     public void HandleCameraLockOnTargets()
     {
         float shortestDistance = Mathf.Infinity;
-        //float shortestDistanceOfRightTarget = Mathf.Infinity;
-        //float shortestDistanceOfLeftTarget = -Mathf.Infinity;
-
-        // Will use layermask in the future to save memory
         Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayers());
 
         for (int i = 0; i < colliders.Length; i++)
@@ -152,7 +148,6 @@ public class PlayerCamera : MonoBehaviour
             if (lockOnTarget != null)
             {
                 Vector3 lockOnTargetDirection = lockOnTarget.transform.position - player.transform.position;
-                float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
                 float viewableAngle = Vector3.Angle(lockOnTargetDirection, cameraObject.transform.forward);
 
                 // If target is dead or the player themselves, check next potential target
@@ -166,7 +161,8 @@ public class PlayerCamera : MonoBehaviour
                 {
                     RaycastHit hit;
                     // If it hits something, target cannot be seen
-                    if (Physics.Linecast(player.playerCombatManager.lockOnTransform.position, lockOnTarget.characterCombatManager.lockOnTransform.position, out hit, WorldUtilityManager.instance.GetEnviroLayers()))
+                    if (Physics.Linecast(player.playerCombatManager.lockOnTransform.position, lockOnTarget.characterCombatManager.lockOnTransform.position, out hit,
+                        WorldUtilityManager.instance.GetEnviroLayers()))
                         continue;
                     else
                     {

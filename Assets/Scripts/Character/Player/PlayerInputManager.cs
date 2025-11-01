@@ -31,7 +31,6 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Lock On Input")]
     public bool isLockedOn = false;
     private Coroutine lockOnCoroutine;
-
     private void Awake()
     {
         if (instance == null)

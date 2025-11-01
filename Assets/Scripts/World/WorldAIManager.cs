@@ -37,6 +37,8 @@ public class WorldAIManager : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G)) spawnCharacters = true;
+
         if (despawnCharacters)
         {
             despawnCharacters = false;

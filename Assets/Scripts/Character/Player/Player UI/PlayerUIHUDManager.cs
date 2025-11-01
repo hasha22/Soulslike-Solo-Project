@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class PlayerUIHUDManager : MonoBehaviour
     [SerializeField] Image leftWeaponQuickSlotIcon;
     [SerializeField] Image magicQuickSlotIcon;
     [SerializeField] Image itemSlotIcon;
+
+    [SerializeField] private TextMeshProUGUI stuff;
     public void SetNewStaminaValue(float oldValue, float newValue)
     {
         staminaBar.SetStat(Mathf.RoundToInt(newValue));
